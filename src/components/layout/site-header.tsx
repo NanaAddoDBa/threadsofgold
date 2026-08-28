@@ -1,5 +1,7 @@
 import { AtSignIcon } from "lucide-react";
+import Link from "next/link";
 
+import { AccountMenu } from "@/components/auth/account-menu";
 import { CartSheet } from "@/components/cart/cart-sheet";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
 import { siteConfig } from "@/config/site";
@@ -16,26 +18,26 @@ export function SiteHeader() {
           <MobileMenu />
         </div>
 
-        <a
-          href="#top"
+        <Link
+          href="/"
           className="font-heading text-xl leading-none font-medium tracking-[0.08em] sm:text-2xl"
           aria-label="Threads of Gold home"
         >
           THREADS OF GOLD
-        </a>
+        </Link>
 
         <nav
           aria-label="Primary navigation"
           className="hidden items-center gap-8 lg:flex"
         >
           {siteConfig.navigation.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="text-sm underline-offset-8 transition-colors hover:text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
           <a
             href={siteConfig.instagramUrl}
@@ -48,7 +50,10 @@ export function SiteHeader() {
           </a>
         </nav>
 
-        <CartSheet />
+        <div className="flex items-center gap-1">
+          <AccountMenu />
+          <CartSheet />
+        </div>
       </div>
     </header>
   );

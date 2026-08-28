@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 
+import { AuthProvider } from "@/components/auth/auth-provider";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { siteConfig } from "@/config/site";
 
@@ -40,7 +41,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${editorial.variable} ${sans.variable}`}>
-        <CartProvider>{children}</CartProvider>
+        <AuthProvider>
+          <CartProvider>{children}</CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

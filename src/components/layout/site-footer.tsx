@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { siteConfig } from "@/config/site";
 
 export function SiteFooter() {
@@ -13,6 +15,12 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="flex flex-col gap-3 text-sm md:items-end">
+          <Link
+            href="/account/sign-in"
+            className="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          >
+            Client account
+          </Link>
           <a
             href={siteConfig.instagramUrl}
             target="_blank"
