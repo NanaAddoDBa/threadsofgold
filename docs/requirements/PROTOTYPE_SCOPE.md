@@ -56,9 +56,19 @@ Do not require NestJS, PostgreSQL, Redis, Cognito, Paystack, SES, n8n, or an LLM
 - Sample subtotal clearly labelled as prototype data
 - No address, delivery, tax, checkout, or payment collection
 
+### Temporary account experience
+
+- Functional email registration, sign-in, protected account, and sign-out journeys
+- Password hashing on the local server; raw passwords are never retained
+- HTTP-only, same-site, time-limited prototype session cookie
+- Origin checks, generic invalid-credential responses, and local rate limiting
+- In-memory accounts and sessions that reset when the local server restarts
+- Clear notices that no permanent customer account or order record is created
+
 ## Excluded experience
 
-- Live authentication or customer accounts
+- Persistent production authentication, verified customer accounts, password recovery, or email verification
+- Permanent personal-data storage or production customer-data processing
 - Checkout, Paystack, Mobile Money, cards, or payment states
 - Orders, fulfillment, delivery, tracking, cancellation, returns, or refunds
 - Merchant order operations

@@ -3,7 +3,7 @@
 Status: approved input is sufficient to begin the first visual prototype
 Confirmed from client discovery: 2026-08-13
 Scope: brand expression, catalog presentation, product discovery, product detail, and a visual cart
-Excluded: live accounts, checkout, payments, orders, fulfillment, delivery, returns, and customer support
+Excluded: production accounts, checkout, payments, orders, fulfillment, delivery, returns, and customer support
 
 ## Prototype objective
 
@@ -108,6 +108,7 @@ All sample prices and unconfirmed product facts must be held in typed content da
 - Search presentation
 - Category, size, colour, and product-type filters
 - Visual cart drawer and cart page using local sample data
+- Temporary registration, sign-in, account, and sign-out screens
 - About/brand-story section
 - Mobile and desktop navigation
 
@@ -125,9 +126,9 @@ All sample prices and unconfirmed product facts must be held in typed content da
 
 ### Explicitly excluded from this prototype
 
-- Real registration or authentication
+- Persistent production registration, authentication, verification, and recovery
 - Checkout and Paystack
-- Personal information collection
+- Permanent personal information storage
 - Real orders, notifications, fulfillment, delivery, cancellation, return, or refund logic
 - Merchant order-management screens
 - Customer-service or AI-support flows
