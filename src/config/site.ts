@@ -7,7 +7,7 @@ export const siteConfig = {
   instagramHandle: "@threads_of_gold_",
   instagramUrl: "https://www.instagram.com/threads_of_gold_/",
   navigation: [
-    { label: "Collection", href: "#collection" },
-    { label: "The House", href: "#the-house" },
+    { label: "Shop", href: "/shop" },
+    { label: "The House", href: "/#the-house" },
   ],
 } as const;

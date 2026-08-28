@@ -1,11 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import { MinusIcon, PlusIcon, ShoppingBagIcon, Trash2Icon } from "lucide-react";
+import { ShoppingBagIcon } from "lucide-react";
+import Link from "next/link";
 
+import { CartLineItem } from "@/components/cart/cart-line-item";
 import { useCart } from "@/components/cart/cart-provider";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Empty,
   EmptyDescription,
@@ -27,14 +28,7 @@ import {
 import { formatGhs } from "@/lib/currency";
 
 export function CartSheet() {
-  const {
-    lines,
-    totalQuantity,
-    addProduct,
-    decreaseProduct,
-    removeProduct,
-    clearCart,
-  } = useCart();
+  const { lines, totalQuantity, clearCart } = useCart();
   const subtotal = lines.reduce(
     (total, line) => total + line.product.samplePriceGhs * line.quantity,
     0,
@@ -46,7 +40,7 @@ export function CartSheet() {
         <Button variant="ghost" size="icon-lg" aria-label="Open preview cart">
           <ShoppingBagIcon data-icon="inline-start" />
           {totalQuantity > 0 ? (
-            <Badge className="absolute -top-1 -right-1" aria-hidden="true">
+            <Badge className="absolute top-0 right-0" aria-hidden="true">
               {totalQuantity}
             </Badge>
           ) : null}
@@ -90,68 +84,8 @@ export function CartSheet() {
               </Button>
             </div>
 
-            {lines.map(({ product, quantity }) => (
-              <article key={product.id} className="flex gap-4">
-                <div className="relative aspect-4/5 w-24 shrink-0 overflow-hidden bg-muted">
-                  <Image
-                    src={product.image.src}
-                    alt=""
-                    fill
-                    sizes="96px"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex min-w-0 flex-1 flex-col gap-3">
-                  <div className="flex flex-col gap-1">
-                    <h3 className="font-heading text-lg leading-none">
-                      {product.name}
-                    </h3>
-                    <p className="text-xs text-muted-foreground">
-                      Preview price · {formatGhs(product.samplePriceGhs)}
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between gap-3">
-                    <div
-                      className="flex items-center gap-2"
-                      aria-label="Quantity"
-                    >
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon-sm"
-                        aria-label={`Decrease ${product.name} quantity`}
-                        onClick={() => decreaseProduct(product.id)}
-                      >
-                        <MinusIcon data-icon="inline-start" />
-                      </Button>
-                      <span
-                        className="min-w-5 text-center text-sm"
-                        aria-live="polite"
-                      >
-                        {quantity}
-                      </span>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon-sm"
-                        aria-label={`Increase ${product.name} quantity`}
-                        onClick={() => addProduct(product.id)}
-                      >
-                        <PlusIcon data-icon="inline-start" />
-                      </Button>
-                    </div>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon-sm"
-                      aria-label={`Remove ${product.name}`}
-                      onClick={() => removeProduct(product.id)}
-                    >
-                      <Trash2Icon data-icon="inline-start" />
-                    </Button>
-                  </div>
-                </div>
-              </article>
+            {lines.map((line) => (
+              <CartLineItem key={line.id} line={line} variant="drawer" />
             ))}
           </div>
         )}
@@ -172,9 +106,21 @@ export function CartSheet() {
                 Illustrative only. Delivery and taxes are not calculated.
               </span>
             </div>
-            <SheetClose asChild>
-              <Button size="lg">Continue exploring</Button>
-            </SheetClose>
+            <div className="grid gap-2 sm:grid-cols-2">
+              <SheetClose asChild>
+                <Link
+                  href="/shop"
+                  className={buttonVariants({ variant: "outline", size: "lg" })}
+                >
+                  Continue shopping
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href="/cart" className={buttonVariants({ size: "lg" })}>
+                  Review selection
+                </Link>
+              </SheetClose>
+            </div>
           </SheetFooter>
         ) : null}
       </SheetContent>

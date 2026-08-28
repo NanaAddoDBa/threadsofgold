@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowDownRightIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -23,10 +24,10 @@ export function HeroSection() {
           </div>
           <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
             <Button asChild size="lg">
-              <a href="#collection">
+              <Link href="/shop">
                 {homeContent.hero.primaryAction}
                 <ArrowDownRightIcon data-icon="inline-end" />
-              </a>
+              </Link>
             </Button>
             <a
               href="#the-house"

@@ -1,4 +1,5 @@
 import { ArrowUpRightIcon } from "lucide-react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
@@ -17,10 +18,10 @@ export function ClosingCtaSection() {
           </p>
           <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
             <Button asChild size="lg">
-              <a href="#collection">
+              <Link href="/shop">
                 Explore the collection
                 <ArrowUpRightIcon data-icon="inline-end" />
-              </a>
+              </Link>
             </Button>
             <a
               href={siteConfig.instagramUrl}

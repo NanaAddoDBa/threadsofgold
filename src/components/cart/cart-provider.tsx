@@ -9,11 +9,11 @@ import {
 } from "react";
 
 import { getProductById } from "@/data/products";
-import type { CartLine } from "@/types/commerce";
+import type { CartLine, Product, ProductSelection } from "@/types/commerce";
 
 const CART_STORAGE_KEY = "threadsofgold:preview-cart";
 const CART_STORAGE_EVENT = "threadsofgold:preview-cart-change";
-const CART_STORAGE_VERSION = 1;
+const CART_STORAGE_VERSION = 2;
 const EMPTY_CART_SNAPSHOT = JSON.stringify({
   version: CART_STORAGE_VERSION,
   lines: [],
@@ -22,19 +22,65 @@ let fallbackCartSnapshot = EMPTY_CART_SNAPSHOT;
 
 interface StoredCart {
   version: typeof CART_STORAGE_VERSION;
-  lines: Array<{ productId: string; quantity: number }>;
+  lines: Array<{
+    productId: string;
+    quantity: number;
+    selections: ProductSelection;
+  }>;
 }
 
 interface CartContextValue {
   lines: CartLine[];
   totalQuantity: number;
-  addProduct: (productId: string) => void;
-  decreaseProduct: (productId: string) => void;
-  removeProduct: (productId: string) => void;
+  addProduct: (productId: string, selections?: ProductSelection) => void;
+  decreaseProduct: (lineId: string) => void;
+  removeProduct: (lineId: string) => void;
   clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
+
+function createCartLineId(
+  productId: string,
+  selections: ProductSelection,
+): string {
+  const optionKey = Object.entries(selections)
+    .toSorted(([firstKey], [secondKey]) => firstKey.localeCompare(secondKey))
+    .map(([key, value]) => `${key}:${value}`)
+    .join("|");
+
+  return optionKey ? `${productId}::${optionKey}` : productId;
+}
+
+function normalizeSelections(
+  product: Product,
+  selections: ProductSelection,
+): ProductSelection {
+  return Object.fromEntries(
+    product.options.flatMap((option) => {
+      const requestedValue = selections[option.label];
+      const selectedValue = option.values.find(
+        (value) => value.label === requestedValue,
+      );
+      const resolvedValue = selectedValue ?? option.values[0];
+
+      return resolvedValue ? [[option.label, resolvedValue.label]] : [];
+    }),
+  );
+}
+
+function isProductSelection(value: unknown): value is ProductSelection {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    Object.entries(value).every(
+      ([key, optionValue]) =>
+        key.length > 0 &&
+        typeof optionValue === "string" &&
+        optionValue.length > 0,
+    )
+  );
+}
 
 function parseStoredCart(rawCart: string): CartLine[] {
   try {
@@ -51,16 +97,28 @@ function parseStoredCart(rawCart: string): CartLine[] {
       if (
         typeof line?.productId !== "string" ||
         typeof line.quantity !== "number" ||
-        line.quantity < 1
+        line.quantity < 1 ||
+        !isProductSelection(line.selections)
       ) {
         return [];
       }
 
       const product = getProductById(line.productId);
 
-      return product
-        ? [{ product, quantity: Math.min(Math.floor(line.quantity), 20) }]
-        : [];
+      if (!product) {
+        return [];
+      }
+
+      const selections = normalizeSelections(product, line.selections);
+
+      return [
+        {
+          id: createCartLineId(product.id, selections),
+          product,
+          selections,
+          quantity: Math.min(Math.floor(line.quantity), 20),
+        },
+      ];
     });
   } catch {
     return [];
@@ -90,9 +148,10 @@ function subscribeToCart(onStoreChange: () => void): () => void {
 function writeCart(lines: CartLine[]): void {
   const storedCart: StoredCart = {
     version: CART_STORAGE_VERSION,
-    lines: lines.map(({ product, quantity }) => ({
+    lines: lines.map(({ product, quantity, selections }) => ({
       productId: product.id,
       quantity,
+      selections,
     })),
   };
 
@@ -116,35 +175,46 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
   const lines = useMemo(() => parseStoredCart(snapshot), [snapshot]);
 
-  const addProduct = useCallback((productId: string) => {
-    const product = getProductById(productId);
+  const addProduct = useCallback(
+    (productId: string, selections: ProductSelection = {}) => {
+      const product = getProductById(productId);
 
-    if (!product) {
-      return;
-    }
+      if (!product) {
+        return;
+      }
 
-    const currentLines = parseStoredCart(getCartSnapshot());
-    const existingLine = currentLines.find(
-      (line) => line.product.id === productId,
-    );
+      const currentLines = parseStoredCart(getCartSnapshot());
+      const normalizedSelections = normalizeSelections(product, selections);
+      const lineId = createCartLineId(productId, normalizedSelections);
+      const existingLine = currentLines.find((line) => line.id === lineId);
 
-    writeCart(
-      existingLine
-        ? currentLines.map((line) =>
-            line.product.id === productId
-              ? { ...line, quantity: Math.min(line.quantity + 1, 20) }
-              : line,
-          )
-        : [...currentLines, { product, quantity: 1 }],
-    );
-  }, []);
+      writeCart(
+        existingLine
+          ? currentLines.map((line) =>
+              line.id === lineId
+                ? { ...line, quantity: Math.min(line.quantity + 1, 20) }
+                : line,
+            )
+          : [
+              ...currentLines,
+              {
+                id: lineId,
+                product,
+                selections: normalizedSelections,
+                quantity: 1,
+              },
+            ],
+      );
+    },
+    [],
+  );
 
-  const decreaseProduct = useCallback((productId: string) => {
+  const decreaseProduct = useCallback((lineId: string) => {
     const currentLines = parseStoredCart(getCartSnapshot());
 
     writeCart(
       currentLines.flatMap((line) => {
-        if (line.product.id !== productId) {
+        if (line.id !== lineId) {
           return [line];
         }
 
@@ -155,11 +225,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     );
   }, []);
 
-  const removeProduct = useCallback((productId: string) => {
+  const removeProduct = useCallback((lineId: string) => {
     writeCart(
-      parseStoredCart(getCartSnapshot()).filter(
-        (line) => line.product.id !== productId,
-      ),
+      parseStoredCart(getCartSnapshot()).filter((line) => line.id !== lineId),
     );
   }, []);
 
