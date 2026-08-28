@@ -116,8 +116,10 @@ When the client changes a confirmed requirement:
 | Category structure               | Confirmed                  | 2026-08-13        | Final launch product list is still needed              |
 | Product-type model               | Confirmed                  | 2026-08-13        | Operational preorder/bespoke rules are deferred        |
 | Logo and product assets          | Received                   | 2026-08-13        | Logo master and final product details are still needed |
-| Visual direction implementation  | Pending                    | -                 | Client reviews the coded prototype                     |
-| Product-page presentation        | Pending                    | -                 | Client reviews the coded prototype                     |
+| Visual direction implementation  | Positive initial review    | 2026-08-28        | Final approval and requested adjustments remain open   |
+| Product-page presentation        | Positive initial review    | 2026-08-28        | Final approval and requested adjustments remain open   |
 | Production exclusions understood | Confirmed by project owner | 2026-08-13        | Live commerce remains outside this prototype           |
+
+The client said she likes the current prototype so far. This is recorded as positive directional feedback, not final prototype acceptance or production authorization.
 
 Prototype sign-off validates the product direction. It does not authorize live payments, real customer-data processing, or production launch.
