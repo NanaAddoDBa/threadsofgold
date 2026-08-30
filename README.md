@@ -30,25 +30,34 @@ pnpm install
 pnpm dev
 ```
 
+The root development command targets the storefront workspace at `http://localhost:3000`. To run that workspace explicitly:
+
+```bash
+pnpm dev:storefront
+```
+
 Quality checks:
 
 ```bash
 pnpm typecheck
 pnpm lint
 pnpm build
+pnpm check
 ```
 
-## Frontend structure
+## Repository structure
 
-- `src/app` — Next.js App Router entrypoints and semantic theme tokens
-- `src/components/ui` — owned shadcn/ui primitives
-- `src/components/layout` — site shell and navigation composition
-- `src/components/sections/home` — modular homepage sections
-- `src/app/shop` and `src/components/product` — collection discovery and product-detail presentation
-- `src/components/cart` and `src/components/checkout` — local-only cart and checkout-preview interactions
-- `src/app/account`, `src/app/api/auth`, `src/components/auth`, and `src/lib/auth` — temporary functional account experience and isolated prototype identity boundary
-- `src/config`, `src/content`, and `src/data` — typed configuration and fixtures, separated from presentation
-- `public/images` — approved brand and product assets
+- `apps/storefront/src/app` — Next.js App Router entrypoints and semantic theme tokens
+- `apps/storefront/src/components/ui` — owned shadcn/ui primitives
+- `apps/storefront/src/components/layout` — site shell and navigation composition
+- `apps/storefront/src/components/sections/home` — modular homepage sections
+- `apps/storefront/src/app/shop` and `apps/storefront/src/components/product` — collection discovery and product-detail presentation
+- `apps/storefront/src/components/cart` and `apps/storefront/src/components/checkout` — local-only cart and checkout-preview interactions
+- `apps/storefront/src/app/account`, `apps/storefront/src/app/api/auth`, `apps/storefront/src/components/auth`, and `apps/storefront/src/lib/auth` — temporary functional account experience and isolated prototype identity boundary
+- `apps/storefront/src/config`, `apps/storefront/src/content`, and `apps/storefront/src/data` — typed configuration and fixtures, separated from presentation
+- `apps/storefront/public/images` — approved brand and product assets
+- `pnpm-workspace.yaml` — workspace membership and dependency-linking policy
+- `turbo.json` — repository task graph and cacheable build outputs
 
 ## Planning
 

@@ -1,0 +1,9 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+sharedWorkspaceLockfile: true
+linkWorkspacePackages: false
+saveWorkspaceProtocol: rolling
+strictPeerDependencies: true
+disallowWorkspaceCycles: true
