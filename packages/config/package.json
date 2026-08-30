@@ -16,6 +16,10 @@
       "types": "./src/api.ts",
       "default": "./dist/api.js"
     },
+    "./observability": {
+      "types": "./src/observability.ts",
+      "default": "./dist/observability.js"
+    },
     "./storefront": {
       "types": "./src/storefront.ts",
       "default": "./dist/storefront.js"

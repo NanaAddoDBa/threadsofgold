@@ -14,9 +14,21 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0"
   },
+  "dependencies": {
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/exporter-trace-otlp-proto": "0.221.0",
+    "@opentelemetry/instrumentation-express": "0.69.0",
+    "@opentelemetry/instrumentation-http": "0.221.0",
+    "@opentelemetry/resources": "2.10.0",
+    "@opentelemetry/sdk-node": "0.221.0",
+    "@opentelemetry/sdk-trace-base": "2.10.0",
+    "@sentry/node": "10.72.0",
+    "pino": "10.3.1"
+  },
   "devDependencies": {
     "@threadsofgold/eslint-config": "workspace:*",
     "@threadsofgold/typescript-config": "workspace:*",
+    "@types/node": "26.2.0",
     "eslint": "9.39.5",
     "typescript": "6.0.3"
   }

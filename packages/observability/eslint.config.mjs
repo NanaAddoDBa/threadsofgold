@@ -1,3 +1,3 @@
-import baseConfig from "@threadsofgold/eslint-config/base";
+import nodeConfig from "@threadsofgold/eslint-config/node";
 
-export default baseConfig;
+export default nodeConfig;
