@@ -36,6 +36,24 @@ The root development command targets the storefront workspace at `http://localho
 pnpm dev:storefront
 ```
 
+Each application has a committed, secret-free `.env.example`. The deployment
+stage and browser origins are intentionally required so a misconfigured build
+cannot silently behave like a local environment. Before running an application
+locally, copy its example to `.env.local` in the same directory:
+
+```bash
+cp apps/storefront/.env.example apps/storefront/.env.local
+cp apps/admin/.env.example apps/admin/.env.local
+cp apps/api/.env.example apps/api/.env.local
+cp apps/worker/.env.example apps/worker/.env.local
+```
+
+`.env.local` files are ignored and must never be committed. Deployed
+development, staging, and production environments receive their values from the
+runtime or secret manager, not from committed environment files. `APP_ENV`
+describes the deployment stage without overriding framework-owned `NODE_ENV`.
+Only variables prefixed with `NEXT_PUBLIC_` are permitted in browser bundles.
+
 Quality checks:
 
 ```bash
@@ -64,6 +82,7 @@ rules, and public-export-only imports between applications and packages.
 - `apps/worker` — standalone NestJS background-processing boundary
 - `packages/ui` — shared shadcn/Radix primitives, utilities, and storefront design tokens
 - `packages/contracts` — runtime-validated Zod contracts and inferred API types
+- `packages/config` — shared, fail-fast environment schemas with explicit application and browser boundaries
 - `packages/database`, `packages/auth`, and `packages/observability` — provider-neutral platform boundaries awaiting later adapters
 - `packages/eslint-config`, `packages/typescript-config`, and `packages/test-utils` — shared engineering foundations
 - `pnpm-workspace.yaml` — workspace membership and dependency-linking policy

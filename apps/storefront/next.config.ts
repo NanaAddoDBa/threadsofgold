@@ -1,4 +1,10 @@
 import type { NextConfig } from "next";
+import { parseStorefrontEnvironment } from "@threadsofgold/config/storefront";
+
+parseStorefrontEnvironment({
+  APP_ENV: process.env["APP_ENV"],
+  NEXT_PUBLIC_STOREFRONT_URL: process.env.NEXT_PUBLIC_STOREFRONT_URL,
+});
 
 const nextConfig: NextConfig = {
   agentRules: false,

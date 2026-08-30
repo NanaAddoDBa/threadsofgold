@@ -4,6 +4,7 @@ import "@threadsofgold/ui/globals.css";
 
 import { AuthProvider } from "@/components/auth/auth-provider";
 import { CartProvider } from "@/components/cart/cart-provider";
+import { storefrontPublicEnvironment } from "@/config/environment.client";
 import { siteConfig } from "@/config/site";
 
 const editorial = Cormorant_Garamond({
@@ -20,7 +21,7 @@ const sans = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://threadsofgold.example"),
+  metadataBase: new URL(storefrontPublicEnvironment.NEXT_PUBLIC_STOREFRONT_URL),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
