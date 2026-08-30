@@ -7,12 +7,24 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
+    },
+    "./containers/postgresql": {
+      "types": "./src/containers/postgresql.ts",
+      "default": "./dist/containers/postgresql.js"
+    },
+    "./containers/redis": {
+      "types": "./src/containers/redis.ts",
+      "default": "./dist/containers/redis.js"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "@testcontainers/postgresql": "12.1.0",
+    "@testcontainers/redis": "12.1.0"
   },
   "devDependencies": {
     "@threadsofgold/eslint-config": "workspace:*",

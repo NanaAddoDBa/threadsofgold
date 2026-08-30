@@ -1,3 +1,1 @@
-export function createDeterministicId(namespace: string, sequence = 1): string {
-  return `${namespace}-${String(sequence).padStart(4, "0")}`;
-}
+export { createDeterministicId, readExplicitTestGate } from "./foundation.js";
