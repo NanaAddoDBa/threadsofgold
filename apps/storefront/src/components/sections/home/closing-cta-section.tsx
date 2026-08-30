@@ -1,7 +1,7 @@
 import { ArrowUpRightIcon } from "lucide-react";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@threadsofgold/ui/components/button";
 import { siteConfig } from "@/config/site";
 import { homeContent } from "@/content/home";
 

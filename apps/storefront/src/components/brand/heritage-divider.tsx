@@ -1,5 +1,5 @@
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
+import { Separator } from "@threadsofgold/ui/components/separator";
+import { cn } from "@threadsofgold/ui/lib/utils";
 
 export function HeritageDivider({ className }: { className?: string }) {
   return (

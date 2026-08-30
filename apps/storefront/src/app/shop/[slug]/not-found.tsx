@@ -3,7 +3,7 @@ import { SearchXIcon } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { Button } from "@/components/ui/button";
+import { Button } from "@threadsofgold/ui/components/button";
 import {
   Empty,
   EmptyContent,
@@ -11,7 +11,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
+} from "@threadsofgold/ui/components/empty";
 
 export default function ProductNotFound() {
   return (

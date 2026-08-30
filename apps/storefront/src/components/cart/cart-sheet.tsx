@@ -5,16 +5,16 @@ import Link from "next/link";
 
 import { CartLineItem } from "@/components/cart/cart-line-item";
 import { useCart } from "@/components/cart/cart-provider";
-import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Badge } from "@threadsofgold/ui/components/badge";
+import { Button, buttonVariants } from "@threadsofgold/ui/components/button";
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
-import { Separator } from "@/components/ui/separator";
+} from "@threadsofgold/ui/components/empty";
+import { Separator } from "@threadsofgold/ui/components/separator";
 import {
   Sheet,
   SheetClose,
@@ -24,7 +24,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@threadsofgold/ui/components/sheet";
 import { formatGhs } from "@/lib/currency";
 
 export function CartSheet() {

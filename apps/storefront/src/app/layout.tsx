@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
+import "@threadsofgold/ui/globals.css";
 
 import { AuthProvider } from "@/components/auth/auth-provider";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { siteConfig } from "@/config/site";
-
-import "./globals.css";
 
 const editorial = Cormorant_Garamond({
   subsets: ["latin"],

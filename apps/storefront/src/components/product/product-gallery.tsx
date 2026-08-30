@@ -4,8 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { ExpandIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@threadsofgold/ui/components/button";
+import { cn } from "@threadsofgold/ui/lib/utils";
 import type { ProductImage } from "@/types/commerce";
 
 interface ProductGalleryProps {

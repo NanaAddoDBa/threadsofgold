@@ -4,7 +4,7 @@ import { CircleUserRoundIcon } from "lucide-react";
 import Link from "next/link";
 
 import { useAuth } from "@/components/auth/auth-provider";
-import { Button } from "@/components/ui/button";
+import { Button } from "@threadsofgold/ui/components/button";
 
 export function AccountMenu() {
   const { user, isLoading } = useAuth();

@@ -6,16 +6,20 @@ import { useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { PasswordField } from "@/components/auth/password-field";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@threadsofgold/ui/components/alert";
+import { Button } from "@threadsofgold/ui/components/button";
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+} from "@threadsofgold/ui/components/field";
+import { Input } from "@threadsofgold/ui/components/input";
 import { prototypeAuthConfig } from "@/config/auth";
 import { parseLoginInput } from "@/lib/auth/validation";
 import type { AuthErrorResponse } from "@/types/auth";

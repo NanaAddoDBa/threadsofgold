@@ -59,6 +59,10 @@ pnpm check
 - `apps/admin` — private merchant Next.js application boundary
 - `apps/api` — versioned NestJS HTTP application boundary
 - `apps/worker` — standalone NestJS background-processing boundary
+- `packages/ui` — shared shadcn/Radix primitives, utilities, and storefront design tokens
+- `packages/contracts` — runtime-validated Zod contracts and inferred API types
+- `packages/database`, `packages/auth`, and `packages/observability` — provider-neutral platform boundaries awaiting later adapters
+- `packages/eslint-config`, `packages/typescript-config`, and `packages/test-utils` — shared engineering foundations
 - `pnpm-workspace.yaml` — workspace membership and dependency-linking policy
 - `turbo.json` — repository task graph and cacheable build outputs
 

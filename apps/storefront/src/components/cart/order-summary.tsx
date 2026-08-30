@@ -2,11 +2,15 @@ import { InfoIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@threadsofgold/ui/components/alert";
+import { Button, buttonVariants } from "@threadsofgold/ui/components/button";
+import { Separator } from "@threadsofgold/ui/components/separator";
 import { formatGhs } from "@/lib/currency";
-import { cn } from "@/lib/utils";
+import { cn } from "@threadsofgold/ui/lib/utils";
 import type { CartLine } from "@/types/commerce";
 
 interface OrderSummaryProps {

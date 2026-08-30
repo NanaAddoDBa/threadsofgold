@@ -4,7 +4,7 @@ import { useDeferredValue, useMemo, useState } from "react";
 import { SearchIcon, SearchXIcon } from "lucide-react";
 
 import { ProductCard } from "@/components/product/product-card";
-import { Button } from "@/components/ui/button";
+import { Button } from "@threadsofgold/ui/components/button";
 import {
   Empty,
   EmptyContent,
@@ -12,12 +12,12 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
+} from "@threadsofgold/ui/components/empty";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from "@/components/ui/input-group";
+} from "@threadsofgold/ui/components/input-group";
 import {
   Select,
   SelectContent,
@@ -25,8 +25,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+} from "@threadsofgold/ui/components/select";
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@threadsofgold/ui/components/toggle-group";
 import type {
   ProductCategory,
   ProductPreview,

@@ -11,9 +11,13 @@ import { SignOutButton } from "@/components/auth/sign-out-button";
 import { HeritageDivider } from "@/components/brand/heritage-divider";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@threadsofgold/ui/components/alert";
+import { Badge } from "@threadsofgold/ui/components/badge";
+import { Button } from "@threadsofgold/ui/components/button";
 import { prototypeAuthConfig } from "@/config/auth";
 import { getCurrentPrototypeUser } from "@/lib/auth/current-user";
 

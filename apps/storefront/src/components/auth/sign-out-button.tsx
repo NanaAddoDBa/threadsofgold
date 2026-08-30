@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-provider";
-import { Button } from "@/components/ui/button";
+import { Button } from "@threadsofgold/ui/components/button";
 
 export function SignOutButton() {
   const router = useRouter();

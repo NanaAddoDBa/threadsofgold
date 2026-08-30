@@ -4,7 +4,7 @@ import { AtSignIcon, CircleUserRoundIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 
 import { useAuth } from "@/components/auth/auth-provider";
-import { Button } from "@/components/ui/button";
+import { Button } from "@threadsofgold/ui/components/button";
 import {
   Sheet,
   SheetClose,
@@ -13,7 +13,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@threadsofgold/ui/components/sheet";
 import { siteConfig } from "@/config/site";
 
 export function MobileMenu() {

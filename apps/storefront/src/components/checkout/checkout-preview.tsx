@@ -13,8 +13,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button, buttonVariants } from "@/components/ui/button";
+} from "@threadsofgold/ui/components/breadcrumb";
+import { Button, buttonVariants } from "@threadsofgold/ui/components/button";
 import {
   Empty,
   EmptyContent,
@@ -22,7 +22,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
+} from "@threadsofgold/ui/components/empty";
 import {
   Field,
   FieldContent,
@@ -32,9 +32,12 @@ import {
   FieldLegend,
   FieldSet,
   FieldTitle,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+} from "@threadsofgold/ui/components/field";
+import { Input } from "@threadsofgold/ui/components/input";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@threadsofgold/ui/components/radio-group";
 import {
   Select,
   SelectContent,
@@ -42,8 +45,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
+} from "@threadsofgold/ui/components/select";
+import { Separator } from "@threadsofgold/ui/components/separator";
 import { deliveryMethods, ghanaRegions } from "@/data/ghana";
 import { formatGhs } from "@/lib/currency";
 import type { CartLine } from "@/types/commerce";

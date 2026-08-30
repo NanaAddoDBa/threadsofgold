@@ -13,8 +13,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { buttonVariants } from "@/components/ui/button";
+} from "@threadsofgold/ui/components/breadcrumb";
+import { buttonVariants } from "@threadsofgold/ui/components/button";
 import {
   Empty,
   EmptyContent,
@@ -22,7 +22,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
+} from "@threadsofgold/ui/components/empty";
 
 export function CartPageClient() {
   const { lines, totalQuantity, clearCart } = useCart();

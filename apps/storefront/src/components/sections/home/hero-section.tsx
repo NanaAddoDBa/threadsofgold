@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownRightIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@threadsofgold/ui/components/button";
 import { homeContent } from "@/content/home";
 
 export function HeroSection() {

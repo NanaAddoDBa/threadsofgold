@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@threadsofgold/ui/components/accordion";
 import type { ProductInformationSection } from "@/types/commerce";
 
 interface ProductInformationProps {

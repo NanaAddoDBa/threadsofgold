@@ -3,7 +3,7 @@
 import { PlusIcon } from "lucide-react";
 
 import { useCart } from "@/components/cart/cart-provider";
-import { Button } from "@/components/ui/button";
+import { Button } from "@threadsofgold/ui/components/button";
 
 interface AddToCartButtonProps {
   productId: string;

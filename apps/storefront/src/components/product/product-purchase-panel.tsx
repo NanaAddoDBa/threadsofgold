@@ -4,8 +4,11 @@ import { useState } from "react";
 import { ArrowRightIcon, CheckIcon, InfoIcon } from "lucide-react";
 
 import { useCart } from "@/components/cart/cart-provider";
-import { Button } from "@/components/ui/button";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Button } from "@threadsofgold/ui/components/button";
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@threadsofgold/ui/components/toggle-group";
 import type { Product, ProductSelection } from "@/types/commerce";
 
 interface ProductPurchasePanelProps {

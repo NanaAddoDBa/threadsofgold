@@ -3,9 +3,9 @@
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { Button } from "@threadsofgold/ui/components/button";
+import { Input } from "@threadsofgold/ui/components/input";
+import { cn } from "@threadsofgold/ui/lib/utils";
 
 interface PasswordFieldProps extends Omit<
   React.ComponentProps<typeof Input>,

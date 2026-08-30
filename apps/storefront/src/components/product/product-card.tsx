@@ -3,9 +3,9 @@ import Link from "next/link";
 import { ArrowUpRightIcon } from "lucide-react";
 
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@threadsofgold/ui/components/badge";
 import { formatGhs } from "@/lib/currency";
-import { cn } from "@/lib/utils";
+import { cn } from "@threadsofgold/ui/lib/utils";
 import type { ProductPreview } from "@/types/commerce";
 
 interface ProductCardProps {

@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useCart } from "@/components/cart/cart-provider";
-import { Button } from "@/components/ui/button";
+import { Button } from "@threadsofgold/ui/components/button";
 import { formatGhs } from "@/lib/currency";
-import { cn } from "@/lib/utils";
+import { cn } from "@threadsofgold/ui/lib/utils";
 import type { CartLine } from "@/types/commerce";
 
 interface CartLineItemProps {

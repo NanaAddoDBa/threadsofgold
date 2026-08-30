@@ -8,7 +8,7 @@ import { ProductCard } from "@/components/product/product-card";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { ProductInformation } from "@/components/product/product-information";
 import { ProductPurchasePanel } from "@/components/product/product-purchase-panel";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@threadsofgold/ui/components/badge";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,8 +16,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
+} from "@threadsofgold/ui/components/breadcrumb";
+import { Button } from "@threadsofgold/ui/components/button";
 import { getProductBySlug, products } from "@/data/products";
 import { formatGhs } from "@/lib/currency";
 
