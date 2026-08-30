@@ -56,6 +56,9 @@ pnpm check
 - `apps/storefront/src/app/account`, `apps/storefront/src/app/api/auth`, `apps/storefront/src/components/auth`, and `apps/storefront/src/lib/auth` — temporary functional account experience and isolated prototype identity boundary
 - `apps/storefront/src/config`, `apps/storefront/src/content`, and `apps/storefront/src/data` — typed configuration and fixtures, separated from presentation
 - `apps/storefront/public/images` — approved brand and product assets
+- `apps/admin` — private merchant Next.js application boundary
+- `apps/api` — versioned NestJS HTTP application boundary
+- `apps/worker` — standalone NestJS background-processing boundary
 - `pnpm-workspace.yaml` — workspace membership and dependency-linking policy
 - `turbo.json` — repository task graph and cacheable build outputs
 

@@ -9,12 +9,15 @@
   "scripts": {
     "dev": "turbo run dev --filter=@threadsofgold/storefront",
     "dev:storefront": "pnpm --filter @threadsofgold/storefront dev",
+    "dev:admin": "pnpm --filter @threadsofgold/admin dev",
+    "dev:api": "pnpm --filter @threadsofgold/api dev",
+    "dev:worker": "pnpm --filter @threadsofgold/worker dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm format:check && turbo run lint typecheck build"
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm build"
   },
   "devDependencies": {
     "prettier": "^3.9.6",
