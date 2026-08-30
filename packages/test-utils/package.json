@@ -11,9 +11,13 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0"
   },
   "devDependencies": {
-    "typescript": "^6.0.3"
+    "@threadsofgold/eslint-config": "workspace:*",
+    "@threadsofgold/typescript-config": "workspace:*",
+    "eslint": "9.39.5",
+    "typescript": "6.0.3"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "extends": "../typescript-config/nextjs.json",
+  "extends": "@threadsofgold/typescript-config/nextjs.json",
   "compilerOptions": {
     "rootDir": "src",
     "types": ["react", "react-dom"]

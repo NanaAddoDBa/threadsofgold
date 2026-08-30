@@ -45,10 +45,13 @@ pnpm build
 pnpm check
 ```
 
+`pnpm check` is the local CI-equivalent gate. Shared workspace presets enforce
+strict TypeScript, unused-code checks, zero-warning ESLint, accessible React
+rules, and public-export-only imports between applications and packages.
+
 ## Repository structure
 
-- `apps/storefront/src/app` — Next.js App Router entrypoints and semantic theme tokens
-- `apps/storefront/src/components/ui` — owned shadcn/ui primitives
+- `apps/storefront/src/app` — customer-facing Next.js App Router entrypoints
 - `apps/storefront/src/components/layout` — site shell and navigation composition
 - `apps/storefront/src/components/sections/home` — modular homepage sections
 - `apps/storefront/src/app/shop` and `apps/storefront/src/components/product` — collection discovery and product-detail presentation

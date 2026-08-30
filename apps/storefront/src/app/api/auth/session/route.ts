@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 import { prototypeSessionCookie } from "@/lib/auth/http";
 import { getPrototypeUserBySessionToken } from "@/lib/auth/store";

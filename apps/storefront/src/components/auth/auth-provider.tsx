@@ -33,9 +33,10 @@ async function readError(response: Response): Promise<AuthErrorResponse> {
   const fallback = { message: "Something went wrong. Please try again." };
   try {
     const data = (await response.json()) as Partial<AuthErrorResponse>;
-    return typeof data.message === "string"
+    if (typeof data.message !== "string") return fallback;
+    return data.fieldErrors
       ? { message: data.message, fieldErrors: data.fieldErrors }
-      : fallback;
+      : { message: data.message };
   } catch {
     return fallback;
   }

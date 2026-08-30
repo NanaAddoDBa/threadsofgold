@@ -10,7 +10,7 @@ const DEFAULT_API_PORT = 4000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger("ApiBootstrap");
-  const configuredPort = Number(process.env.PORT ?? DEFAULT_API_PORT);
+  const configuredPort = Number(process.env["PORT"] ?? DEFAULT_API_PORT);
   const port =
     Number.isInteger(configuredPort) && configuredPort > 0
       ? configuredPort

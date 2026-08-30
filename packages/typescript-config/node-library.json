@@ -1,11 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "./node-library.json",
+  "extends": "./base.json",
   "compilerOptions": {
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "types": ["node"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "sourceMap": true
   }
 }

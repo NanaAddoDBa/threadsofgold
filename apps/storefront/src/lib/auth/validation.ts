@@ -35,12 +35,14 @@ function validateEmail(email: string): string | undefined {
   if (email.length > 254 || !emailPattern.test(email)) {
     return "Enter a valid email address.";
   }
+  return undefined;
 }
 
 function validatePassword(password: string): string | undefined {
   if (!password) return "Enter your password.";
   if (password.length < 10) return "Use at least 10 characters.";
   if (password.length > 128) return "Use no more than 128 characters.";
+  return undefined;
 }
 
 function validateName(value: string, label: string): string | undefined {
@@ -48,14 +50,15 @@ function validateName(value: string, label: string): string | undefined {
   if (value.length < 2 || value.length > 50 || !namePattern.test(value)) {
     return `Enter a valid ${label.toLowerCase()}.`;
   }
+  return undefined;
 }
 
 export function parseLoginInput(
   value: unknown,
 ): ValidationResult<LoginCredentials> {
   const body = isRecord(value) ? value : {};
-  const email = normalizeEmail(body.email);
-  const password = readString(body.password);
+  const email = normalizeEmail(body["email"]);
+  const password = readString(body["password"]);
   const fieldErrors: FieldErrors = {};
 
   const emailError = validateEmail(email);
@@ -71,11 +74,11 @@ export function parseRegistrationInput(
   value: unknown,
 ): ValidationResult<RegistrationDetails> {
   const body = isRecord(value) ? value : {};
-  const firstName = normalizeName(body.firstName);
-  const lastName = normalizeName(body.lastName);
-  const email = normalizeEmail(body.email);
-  const password = readString(body.password);
-  const consent = body.consent === true;
+  const firstName = normalizeName(body["firstName"]);
+  const lastName = normalizeName(body["lastName"]);
+  const email = normalizeEmail(body["email"]);
+  const password = readString(body["password"]);
+  const consent = body["consent"] === true;
   const fieldErrors: FieldErrors = {};
 
   const firstNameError = validateName(firstName, "First name");

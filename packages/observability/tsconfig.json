@@ -1,5 +1,5 @@
 {
-  "extends": "../typescript-config/base.json",
+  "extends": "@threadsofgold/typescript-config/node-library.json",
   "compilerOptions": {
     "rootDir": "src"
   },

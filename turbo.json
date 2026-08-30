@@ -1,5 +1,10 @@
 {
   "$schema": "https://turborepo.com/schema.json",
+  "globalDependencies": [
+    ".prettierrc.json",
+    "packages/eslint-config/*.mjs",
+    "packages/typescript-config/*.json"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

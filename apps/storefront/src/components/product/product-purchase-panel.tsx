@@ -37,7 +37,7 @@ export function ProductPurchasePanel({ product }: ProductPurchasePanelProps) {
           </legend>
           <ToggleGroup
             type="single"
-            value={selectedValueIds[option.id]}
+            value={selectedValueIds[option.id] ?? ""}
             onValueChange={(value) => {
               const selectedValue = option.values.find(
                 (candidate) => candidate.id === value,
