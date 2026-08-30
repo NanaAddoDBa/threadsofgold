@@ -1,8 +1,12 @@
 .next
+.turbo
+coverage
+dist
 node_modules
 pnpm-lock.yaml
-public/images
-next-env.d.ts
+apps/storefront/public/images
+**/next-env.d.ts
+# Human-maintained planning registers preserve deliberate Markdown layout.
 docs/IMPLEMENTATION_ROADMAP.md
 docs/requirements/CLIENT_DISCOVERY_WHATSAPP.md
 docs/requirements/REQUIREMENTS_REGISTER.md

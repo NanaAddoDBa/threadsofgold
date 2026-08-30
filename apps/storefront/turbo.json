@@ -1,0 +1,13 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "env": ["APP_ENV", "NEXT_PUBLIC_STOREFRONT_URL"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"]
+    },
+    "dev": {
+      "env": ["APP_ENV", "NEXT_PUBLIC_STOREFRONT_URL"]
+    }
+  }
+}

@@ -30,25 +30,63 @@ pnpm install
 pnpm dev
 ```
 
+The root development command targets the storefront workspace at `http://localhost:3000`. To run that workspace explicitly:
+
+```bash
+pnpm dev:storefront
+```
+
+Each application has a committed, secret-free `.env.example`. The deployment
+stage and browser origins are intentionally required so a misconfigured build
+cannot silently behave like a local environment. Before running an application
+locally, copy its example to `.env.local` in the same directory:
+
+```bash
+cp apps/storefront/.env.example apps/storefront/.env.local
+cp apps/admin/.env.example apps/admin/.env.local
+cp apps/api/.env.example apps/api/.env.local
+cp apps/worker/.env.example apps/worker/.env.local
+```
+
+`.env.local` files are ignored and must never be committed. Deployed
+development, staging, and production environments receive their values from the
+runtime or secret manager, not from committed environment files. `APP_ENV`
+describes the deployment stage without overriding framework-owned `NODE_ENV`.
+Only variables prefixed with `NEXT_PUBLIC_` are permitted in browser bundles.
+
 Quality checks:
 
 ```bash
 pnpm typecheck
 pnpm lint
 pnpm build
+pnpm check
 ```
 
-## Frontend structure
+`pnpm check` is the local CI-equivalent gate. Shared workspace presets enforce
+strict TypeScript, unused-code checks, zero-warning ESLint, accessible React
+rules, and public-export-only imports between applications and packages.
 
-- `src/app` — Next.js App Router entrypoints and semantic theme tokens
-- `src/components/ui` — owned shadcn/ui primitives
-- `src/components/layout` — site shell and navigation composition
-- `src/components/sections/home` — modular homepage sections
-- `src/app/shop` and `src/components/product` — collection discovery and product-detail presentation
-- `src/components/cart` and `src/components/checkout` — local-only cart and checkout-preview interactions
-- `src/app/account`, `src/app/api/auth`, `src/components/auth`, and `src/lib/auth` — temporary functional account experience and isolated prototype identity boundary
-- `src/config`, `src/content`, and `src/data` — typed configuration and fixtures, separated from presentation
-- `public/images` — approved brand and product assets
+## Repository structure
+
+- `apps/storefront/src/app` — customer-facing Next.js App Router entrypoints
+- `apps/storefront/src/components/layout` — site shell and navigation composition
+- `apps/storefront/src/components/sections/home` — modular homepage sections
+- `apps/storefront/src/app/shop` and `apps/storefront/src/components/product` — collection discovery and product-detail presentation
+- `apps/storefront/src/components/cart` and `apps/storefront/src/components/checkout` — local-only cart and checkout-preview interactions
+- `apps/storefront/src/app/account`, `apps/storefront/src/app/api/auth`, `apps/storefront/src/components/auth`, and `apps/storefront/src/lib/auth` — temporary functional account experience and isolated prototype identity boundary
+- `apps/storefront/src/config`, `apps/storefront/src/content`, and `apps/storefront/src/data` — typed configuration and fixtures, separated from presentation
+- `apps/storefront/public/images` — approved brand and product assets
+- `apps/admin` — private merchant Next.js application boundary
+- `apps/api` — versioned NestJS HTTP application boundary
+- `apps/worker` — standalone NestJS background-processing boundary
+- `packages/ui` — shared shadcn/Radix primitives, utilities, and storefront design tokens
+- `packages/contracts` — runtime-validated Zod contracts and inferred API types
+- `packages/config` — shared, fail-fast environment schemas with explicit application and browser boundaries
+- `packages/database`, `packages/auth`, and `packages/observability` — provider-neutral platform boundaries awaiting later adapters
+- `packages/eslint-config`, `packages/typescript-config`, and `packages/test-utils` — shared engineering foundations
+- `pnpm-workspace.yaml` — workspace membership and dependency-linking policy
+- `turbo.json` — repository task graph and cacheable build outputs
 
 ## Planning
 

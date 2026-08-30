@@ -212,12 +212,14 @@ An atomic work package should normally be reviewable in one pull request, have o
 
 Implementation note (2026-08-30): the repository policy, CODEOWNERS file, pull-request template, pinned Node version, and initial `Quality` workflow are implemented. Pull request #2 passed the remote `Quality` workflow, and `main` protection was verified with pull requests, the strict `Quality` check, conversation resolution, administrator enforcement, and force-push and deletion blocking required. P1.01 is complete for the current single-maintainer model. Approval and CODEOWNERS enforcement must be enabled when a second maintainer is added. P1.11 remains open until the remaining test, infrastructure, and security jobs are delivered.
 
+Implementation note (2026-08-30, P1.02-P1.06): pull request #3 delivers pnpm workspaces and Turborepo; separate storefront, admin, API, and worker applications; the shared UI, contracts, database, auth, observability, configuration, lint, TypeScript, and test-utility package boundaries; strict TypeScript and zero-warning lint/format/import controls; and fail-fast, redacted environment validation with four committed secret-free examples. Its initial remote `Quality` run passed after frozen installation, and focused local probes verified API HTTP startup, worker startup, strict cache declarations, required configuration, loopback-safe defaults, rejected invalid ports and stages, and rejected malformed, local, or insecure deployed origins without echoing submitted values. P1.07 and later Phase 1 items remain open.
+
 - [x] P1.01 Define branch protection, conventional commits, CODEOWNERS, pull-request template, review requirements, and release policy.
-- [ ] P1.02 Initialize pnpm workspaces and Turborepo with pinned Node and pnpm versions.
-- [ ] P1.03 Create `storefront`, `admin`, `api`, and `worker` applications.
-- [ ] P1.04 Create shared UI, contracts, database, auth, observability, lint, TypeScript, and test packages.
-- [ ] P1.05 Enable strict TypeScript, import boundaries, unused-code checks, formatting, and linting.
-- [ ] P1.06 Add environment schema validation and committed `.env.example` files with no secrets.
+- [x] P1.02 Initialize pnpm workspaces and Turborepo with pinned Node and pnpm versions.
+- [x] P1.03 Create `storefront`, `admin`, `api`, and `worker` applications.
+- [x] P1.04 Create shared UI, contracts, database, auth, observability, lint, TypeScript, and test packages.
+- [x] P1.05 Enable strict TypeScript, import boundaries, unused-code checks, formatting, and linting.
+- [x] P1.06 Add environment schema validation and committed `.env.example` files with no secrets.
 - [ ] P1.07 Configure structured JSON logging, correlation IDs, redaction, OpenTelemetry, and Sentry release identifiers.
 - [ ] P1.08 Create an API versioning convention and generate OpenAPI in CI.
 - [ ] P1.09 Generate the typed API client and fail CI when the generated contract is stale.

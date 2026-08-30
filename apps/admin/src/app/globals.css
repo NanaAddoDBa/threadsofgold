@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --admin-background: #0c0b09;
+  --admin-panel: #15130f;
+  --admin-border: #332b1c;
+  --admin-gold: #d5b56c;
+  --admin-foreground: #f6f0e4;
+  --admin-muted: #b8ae9e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--admin-background);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgb(213 181 108 / 10%),
+      transparent 32rem
+    ),
+    var(--admin-background);
+  color: var(--admin-foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+}
