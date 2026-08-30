@@ -1,0 +1,82 @@
+{
+  "components": {
+    "parameters": {},
+    "schemas": {
+      "ServiceFoundation": {
+        "description": "Public metadata for the versioned Threads of Gold API.",
+        "properties": {
+          "service": {
+            "description": "Stable service identifier.",
+            "enum": [
+              "threads-of-gold-api"
+            ],
+            "example": "threads-of-gold-api",
+            "type": "string"
+          },
+          "status": {
+            "description": "Current engineering-foundation status.",
+            "enum": [
+              "foundation"
+            ],
+            "example": "foundation",
+            "type": "string"
+          },
+          "version": {
+            "description": "Semantic application version, separate from a release ID.",
+            "example": "0.1.0",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "service",
+          "status",
+          "version"
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {},
+    "description": "Versioned public contract for the Threads of Gold engineering foundation.",
+    "license": {
+      "name": "Proprietary"
+    },
+    "title": "Threads of Gold API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/v1": {
+      "get": {
+        "operationId": "getServiceFoundation",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceFoundation"
+                }
+              }
+            },
+            "description": "Stable metadata for the current API foundation."
+          }
+        },
+        "security": [],
+        "summary": "Read the public API foundation metadata",
+        "tags": [
+          "foundation"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Current API origin",
+      "url": "/"
+    }
+  ],
+  "tags": []
+}

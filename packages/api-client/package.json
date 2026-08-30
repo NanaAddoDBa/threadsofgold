@@ -1,5 +1,5 @@
 {
-  "name": "@threadsofgold/contracts",
+  "name": "@threadsofgold/api-client",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -8,28 +8,27 @@
       "types": "./src/index.ts",
       "default": "./dist/index.js"
     },
-    "./service": {
-      "types": "./src/service.ts",
-      "default": "./dist/service.js"
-    },
-    "./openapi": {
-      "types": "./src/openapi.ts",
-      "default": "./dist/openapi.js"
+    "./models": {
+      "types": "./src/generated/models/index.ts",
+      "default": "./dist/generated/models/index.js"
     }
   },
   "scripts": {
+    "generate": "orval --config orval.config.ts",
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@asteasolutions/zod-to-openapi": "9.1.0",
     "zod": "4.5.4"
   },
   "devDependencies": {
     "@threadsofgold/eslint-config": "workspace:*",
     "@threadsofgold/typescript-config": "workspace:*",
+    "@types/node": "^26.2.0",
     "eslint": "9.39.5",
+    "orval": "8.27.0",
+    "prettier": "3.9.6",
     "typescript": "6.0.3"
   }
 }

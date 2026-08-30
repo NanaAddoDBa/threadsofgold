@@ -1,5 +1,5 @@
 import { HttpAdapterHost, NestFactory } from "@nestjs/core";
-import type { INestApplication } from "@nestjs/common";
+import { VersioningType, type INestApplication } from "@nestjs/common";
 import type { ObservabilityRuntime } from "@threadsofgold/observability";
 
 import { AppModule } from "./app.module.js";
@@ -16,6 +16,11 @@ export async function createApiApplication(
 
   application.useLogger(new NestStructuredLogger(observability.logger));
   application.flushLogs();
+  application.enableVersioning({
+    defaultVersion: "1",
+    prefix: "v",
+    type: VersioningType.URI,
+  });
   application.use(createRequestObservabilityMiddleware(observability.logger));
 
   const adapterHost = application.get(HttpAdapterHost);
