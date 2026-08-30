@@ -210,9 +210,9 @@ An atomic work package should normally be reviewable in one pull request, have o
 **Capabilities:** CAP-02, CAP-14, CAP-15
 **Milestone:** first half of M1
 
-Implementation note (2026-08-28): the repository policy, CODEOWNERS file, pull-request template, pinned local Node version, and initial `Quality` workflow are implemented locally. P1.01 and P1.11 remain open until the change is pushed, the workflow succeeds on GitHub, the `main` ruleset is enabled and verified, and the remaining test and security jobs are delivered.
+Implementation note (2026-08-30): the repository policy, CODEOWNERS file, pull-request template, pinned Node version, and initial `Quality` workflow are implemented. Pull request #2 passed the remote `Quality` workflow, and `main` protection was verified with pull requests, the strict `Quality` check, conversation resolution, administrator enforcement, and force-push and deletion blocking required. P1.01 is complete for the current single-maintainer model. Approval and CODEOWNERS enforcement must be enabled when a second maintainer is added. P1.11 remains open until the remaining test, infrastructure, and security jobs are delivered.
 
-- [ ] P1.01 Define branch protection, conventional commits, CODEOWNERS, pull-request template, review requirements, and release policy.
+- [x] P1.01 Define branch protection, conventional commits, CODEOWNERS, pull-request template, review requirements, and release policy.
 - [ ] P1.02 Initialize pnpm workspaces and Turborepo with pinned Node and pnpm versions.
 - [ ] P1.03 Create `storefront`, `admin`, `api`, and `worker` applications.
 - [ ] P1.04 Create shared UI, contracts, database, auth, observability, lint, TypeScript, and test packages.

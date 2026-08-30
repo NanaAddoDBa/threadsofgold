@@ -32,19 +32,18 @@ Before merge, every pull request must:
 
 Changes to authentication, authorization, personal-data processing, pricing, promotions, payment, webhooks, order state, Terraform, or production workflows require an explicit security and operational review before merge.
 
-## Required GitHub settings
+## GitHub protection status
 
-Configure a ruleset for `main` after this workflow is available on GitHub:
+The `main` branch protection was enabled and remotely verified on 2026-08-30. It currently:
 
-- Require a pull request before merging.
-- Require at least one approval and dismiss stale approvals after new commits.
-- Require review from CODEOWNERS when an eligible second maintainer exists.
-- Require the `Quality` status check and require the branch to be up to date.
-- Require conversation resolution.
-- Block force pushes and branch deletion.
-- Restrict bypass permission to a documented emergency role.
+- Requires a pull request before merging.
+- Requires the `Quality` status check and requires the branch to be up to date.
+- Requires conversation resolution.
+- Applies to repository administrators.
+- Blocks force pushes and branch deletion.
+- Requires zero approvals while the repository has only one maintainer, because an author cannot approve their own pull request.
 
-These controls are not considered active until the remote ruleset and a real pull request have been verified.
+When a second eligible maintainer is added, increase the required approval count to one and enable CODEOWNERS review. Keep stale-review dismissal enabled so approval is repeated after material new commits. Any emergency bypass must be documented and followed by a reviewed corrective pull request.
 
 ## Release policy
 
@@ -56,4 +55,4 @@ These controls are not considered active until the remote ruleset and a real pul
 
 ## Current automated gate
 
-The initial `Quality` workflow installs from the committed lockfile and runs formatting, linting, TypeScript checks, and a production build on pull requests and pushes to `main`. Unit, integration, contract, end-to-end, infrastructure, dependency, secret, and container security jobs will be added in their roadmap packages; their absence must not be represented as completed coverage.
+The initial `Quality` workflow installs from the committed lockfile and runs formatting, linting, TypeScript checks, and a production build on pull requests and pushes to `main`. The workflow passed remotely on pull request #2 on 2026-08-30 and is required by `main` protection. Unit, integration, contract, end-to-end, infrastructure, dependency, secret, and container security jobs will be added in their roadmap packages; their absence must not be represented as completed coverage.
