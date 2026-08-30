@@ -1,0 +1,21 @@
+{
+  "id": "2ee70b70-f210-4e89-bf46-a05b7443c784",
+  "name": "Paystack-compatible local transaction verification",
+  "priority": 10,
+  "request": {
+    "method": "GET",
+    "urlPath": "/transaction/verify/tog-local-0001",
+    "headers": {
+      "Authorization": {
+        "equalTo": "Bearer local-development-only"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "transaction-verify-success.json"
+  }
+}

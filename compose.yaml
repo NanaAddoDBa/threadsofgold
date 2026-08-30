@@ -1,0 +1,88 @@
+services:
+  postgres:
+    image: postgres:17.11-alpine3.24
+    environment:
+      POSTGRES_DB: ${TOG_POSTGRES_DB:-threadsofgold}
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C
+      POSTGRES_PASSWORD: ${TOG_POSTGRES_PASSWORD:-local-development-only}
+      POSTGRES_USER: ${TOG_POSTGRES_USER:-threadsofgold}
+      PGTZ: UTC
+      TZ: UTC
+    ports:
+      - "127.0.0.1:${TOG_POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} -h 127.0.0.1",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    stop_grace_period: 30s
+
+  redis:
+    image: redis:8.2.9-alpine3.22
+    command:
+      - redis-server
+      - --appendonly
+      - "no"
+      - --save
+      - ""
+      - --requirepass
+      - ${TOG_REDIS_PASSWORD:-local-development-only}
+    environment:
+      REDIS_PASSWORD: ${TOG_REDIS_PASSWORD:-local-development-only}
+    ports:
+      - "127.0.0.1:${TOG_REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'redis-cli --no-auth-warning -a "$${REDIS_PASSWORD}" ping | grep -q ''^PONG$''',
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+    stop_grace_period: 10s
+
+  mailpit:
+    image: axllent/mailpit:v1.31.0
+    environment:
+      MP_MAX_MESSAGES: "500"
+      TZ: UTC
+    ports:
+      - "127.0.0.1:${TOG_SMTP_PORT:-1025}:1025"
+      - "127.0.0.1:${TOG_MAILPIT_UI_PORT:-8025}:8025"
+    healthcheck:
+      test: ["CMD", "/mailpit", "readyz"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+    stop_grace_period: 10s
+
+  paystack-mock:
+    image: wiremock/wiremock:3.13.2
+    command:
+      - --disable-gzip
+    ports:
+      - "127.0.0.1:${TOG_PAYSTACK_PORT:-8089}:8080"
+    volumes:
+      - type: bind
+        source: ./infrastructure/local/paystack/mappings
+        target: /home/wiremock/mappings
+        read_only: true
+      - type: bind
+        source: ./infrastructure/local/paystack/__files
+        target: /home/wiremock/__files
+        read_only: true
+    # WireMock 3.13.2 supplies its own image health check against /__admin/health.
+    stop_grace_period: 10s
+
+volumes:
+  postgres-data:

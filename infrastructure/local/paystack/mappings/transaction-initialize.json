@@ -1,0 +1,39 @@
+{
+  "id": "2f9f7097-0e10-4b27-9670-ae63d173a914",
+  "name": "Paystack-compatible local transaction initialization",
+  "priority": 10,
+  "request": {
+    "method": "POST",
+    "urlPath": "/transaction/initialize",
+    "headers": {
+      "Authorization": {
+        "equalTo": "Bearer local-development-only"
+      },
+      "Content-Type": {
+        "contains": "application/json"
+      }
+    },
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$[?(@.email == 'foundation@threadsofgold.invalid')]"
+      },
+      {
+        "matchesJsonPath": "$[?(@.amount == '12500')]"
+      },
+      {
+        "matchesJsonPath": "$[?(@.currency == 'GHS')]"
+      },
+      {
+        "matchesJsonPath": "$[?(@.reference == 'tog-local-0001')]"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "transaction-initialize-success.json",
+    "transformers": ["response-template"]
+  }
+}

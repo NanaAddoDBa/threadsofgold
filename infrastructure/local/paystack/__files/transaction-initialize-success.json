@@ -1,0 +1,9 @@
+{
+  "status": true,
+  "message": "Authorization URL created",
+  "data": {
+    "authorization_url": "http://{{request.headers.Host}}/checkout/tog-local-0001",
+    "access_code": "tog_local_access_0001",
+    "reference": "tog-local-0001"
+  }
+}

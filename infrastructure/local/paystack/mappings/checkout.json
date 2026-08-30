@@ -1,0 +1,16 @@
+{
+  "id": "205d7cd2-eec8-409f-82d9-80de690d5494",
+  "name": "Local checkout placeholder",
+  "priority": 10,
+  "request": {
+    "method": "GET",
+    "urlPath": "/checkout/tog-local-0001"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "text/html; charset=utf-8"
+    },
+    "bodyFileName": "checkout.html"
+  }
+}
