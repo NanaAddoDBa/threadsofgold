@@ -45,7 +45,7 @@ export default defineConfig({
         webServer: {
           command:
             process.env["PLAYWRIGHT_WEB_SERVER_COMMAND"] ??
-            "pnpm --filter @threadsofgold/storefront dev",
+            "pnpm dev:storefront",
           env: {
             APP_ENV: "local",
             NEXT_PUBLIC_STOREFRONT_URL: baseUrl,
