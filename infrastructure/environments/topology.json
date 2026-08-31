@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "decisionStatus": "draft",
+  "provider": "aws",
+  "organization": {
+    "featureSet": "ALL",
+    "landingZone": "aws-control-tower",
+    "managementAccount": "management",
+    "liveMetadataPolicy": "external-only",
+    "landingZoneAdministrationStrategy": "mfa-protected-non-root-role",
+    "managementRootAccessStrategy": "external-unique-password-business-recovery-multiple-mfa-separated-custody-no-access-keys",
+    "managementRootUseMonitoringRequired": true,
+    "centralizedRootFeatures": ["RootCredentialsManagement", "RootSessions"],
+    "memberRootAccessStrategy": "centralized-no-long-lived-credentials",
+    "memberRootDelegatedAdministrator": "security-audit",
+    "organizationTrailStrategy": "control-tower-managed",
+    "organizationTrailDestinationAccount": "log-archive",
+    "organizationTrailSecurityPolicy": "encrypted-integrity-validated-access-controlled-retention-approved",
+    "controlTowerHomeRegion": "eu-central-1",
+    "governedRegions": ["eu-central-1"],
+    "workloadRegions": ["eu-central-1"],
+    "regionRestrictionStrategy": "control-tower-region-deny-with-reviewed-exceptions",
+    "inventoryCoverageStrategy": "all-commercial-regions-and-relevant-global-services",
+    "regionDecisionStatus": "pending-p0.11"
+  },
+  "organizationalUnits": [
+    {
+      "key": "security",
+      "accounts": ["log-archive", "security-audit"],
+      "controlTowerBaseline": "AWSControlTowerBaseline"
+    },
+    {
+      "key": "development",
+      "accounts": ["development"],
+      "controlTowerBaseline": "AWSControlTowerBaseline"
+    },
+    {
+      "key": "workloads-preproduction",
+      "accounts": ["staging"],
+      "controlTowerBaseline": "AWSControlTowerBaseline"
+    },
+    {
+      "key": "workloads-production",
+      "accounts": ["production"],
+      "controlTowerBaseline": "AWSControlTowerBaseline"
+    }
+  ],
+  "accounts": [
+    {
+      "key": "management",
+      "displayName": "Threads of Gold Organization Management",
+      "category": "core",
+      "organizationalUnit": null,
+      "controlTowerEnrollment": "management-account",
+      "applicationWorkloadsAllowed": false,
+      "accountIdVariable": "TOG_AWS_MANAGEMENT_ACCOUNT_ID"
+    },
+    {
+      "key": "log-archive",
+      "displayName": "Threads of Gold Log Archive",
+      "category": "security",
+      "organizationalUnit": "security",
+      "controlTowerEnrollment": "landing-zone-shared-account",
+      "applicationWorkloadsAllowed": false,
+      "accountIdVariable": "TOG_AWS_LOG_ARCHIVE_ACCOUNT_ID"
+    },
+    {
+      "key": "security-audit",
+      "displayName": "Threads of Gold Security Audit",
+      "category": "security",
+      "organizationalUnit": "security",
+      "controlTowerEnrollment": "landing-zone-shared-account",
+      "applicationWorkloadsAllowed": false,
+      "accountIdVariable": "TOG_AWS_SECURITY_AUDIT_ACCOUNT_ID"
+    },
+    {
+      "key": "development",
+      "displayName": "Threads of Gold Development",
+      "category": "workload",
+      "organizationalUnit": "development",
+      "controlTowerEnrollment": "account-factory-or-explicit-enrollment",
+      "applicationWorkloadsAllowed": true,
+      "accountIdVariable": "TOG_AWS_DEVELOPMENT_ACCOUNT_ID"
+    },
+    {
+      "key": "staging",
+      "displayName": "Threads of Gold Staging",
+      "category": "workload",
+      "organizationalUnit": "workloads-preproduction",
+      "controlTowerEnrollment": "account-factory-or-explicit-enrollment",
+      "applicationWorkloadsAllowed": true,
+      "accountIdVariable": "TOG_AWS_STAGING_ACCOUNT_ID"
+    },
+    {
+      "key": "production",
+      "displayName": "Threads of Gold Production",
+      "category": "workload",
+      "organizationalUnit": "workloads-production",
+      "controlTowerEnrollment": "account-factory-or-explicit-enrollment",
+      "applicationWorkloadsAllowed": true,
+      "accountIdVariable": "TOG_AWS_PRODUCTION_ACCOUNT_ID"
+    }
+  ],
+  "environments": [
+    {
+      "key": "development",
+      "account": "development",
+      "githubEnvironment": "development",
+      "dataClassification": "synthetic-or-sanitized",
+      "applicationCustomerDataAllowed": false,
+      "primaryRegionVariable": "TOG_AWS_DEVELOPMENT_PRIMARY_REGION",
+      "deploymentRoleArnVariable": "TOG_AWS_DEVELOPMENT_DEPLOYMENT_ROLE_ARN"
+    },
+    {
+      "key": "staging",
+      "account": "staging",
+      "githubEnvironment": "staging",
+      "dataClassification": "synthetic-or-sanitized",
+      "applicationCustomerDataAllowed": false,
+      "primaryRegionVariable": "TOG_AWS_STAGING_PRIMARY_REGION",
+      "deploymentRoleArnVariable": "TOG_AWS_STAGING_DEPLOYMENT_ROLE_ARN"
+    },
+    {
+      "key": "production",
+      "account": "production",
+      "githubEnvironment": "production",
+      "dataClassification": "restricted-customer-data",
+      "applicationCustomerDataAllowed": true,
+      "primaryRegionVariable": "TOG_AWS_PRODUCTION_PRIMARY_REGION",
+      "deploymentRoleArnVariable": "TOG_AWS_PRODUCTION_DEPLOYMENT_ROLE_ARN"
+    }
+  ]
+}
