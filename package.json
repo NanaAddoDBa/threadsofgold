@@ -32,6 +32,7 @@
     "database:migrate:deploy": "pnpm --filter @threadsofgold/database migrate:deploy",
     "contracts:generate": "pnpm --filter @threadsofgold/api openapi:generate && prettier --write packages/contracts/openapi/v1.json && pnpm --filter @threadsofgold/api-client generate",
     "contracts:check": "node scripts/check-generated.mjs && redocly lint packages/contracts/openapi/v1.json",
+    "infrastructure:check": "node scripts/validate-environment-topology.mjs",
     "licenses:check": "node scripts/check-licenses.mjs",
     "renovate:validate": "node scripts/validate-renovate-config.mjs",
     "local:setup": "node tooling/scripts/local-platform.mjs setup",
@@ -43,7 +44,7 @@
     "foundation:verify": "node scripts/verify-walking-skeleton.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm contracts:check && pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "check": "pnpm infrastructure:check && pnpm contracts:check && pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

@@ -168,6 +168,9 @@ jobs:
           terraform_version: 1.16.0
           terraform_wrapper: false
 
+      - name: Validate environment isolation contract
+        run: node scripts/validate-environment-topology.mjs
+
       - name: Discover and validate Terraform roots
         run: node .github/scripts/validate-terraform.mjs
 

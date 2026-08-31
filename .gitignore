@@ -21,6 +21,24 @@ packages/database/src/generated/prisma/
 # task cache
 .turbo/
 
+# terraform local state and generated artifacts
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+*.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+!*.tfvars.example
+!*.tfvars.json.example
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
 # local environment files
 .env*
 !.env.example
