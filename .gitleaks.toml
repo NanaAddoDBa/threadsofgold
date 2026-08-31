@@ -2,3 +2,13 @@ title = "Threads of Gold secret scanning"
 
 [extend]
 useDefault = true
+
+[[rules]]
+id = "curl-auth-header"
+
+[[rules.allowlists]]
+description = "Ignore the documented deterministic credential for the local Paystack stub"
+condition = "AND"
+regexTarget = "line"
+regexes = ['''Authorization: Bearer local-development-only''']
+paths = ['''^docs/runbooks/local-development\.md$''']
