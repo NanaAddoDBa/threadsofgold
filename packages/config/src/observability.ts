@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
   applicationEnvironmentSchema,
   isDeployedEnvironment,
+  releaseIdentifierSchema,
   type ApplicationEnvironment,
 } from "./common.js";
 import { parseEnvironment } from "./parse-environment.js";
@@ -29,16 +30,7 @@ export const logLevelSchema = z.enum([
 
 export const observabilityEnvironmentShape = {
   LOG_LEVEL: logLevelSchema.default("info"),
-  APP_RELEASE: z
-    .string()
-    .trim()
-    .min(1)
-    .max(200)
-    .regex(
-      /^[A-Za-z0-9][A-Za-z0-9._/@:+-]*$/,
-      "Must be an immutable release identifier without whitespace.",
-    )
-    .default("local"),
+  APP_RELEASE: releaseIdentifierSchema,
   OTEL_ENABLED: booleanEnvironmentSchema.default(false),
   OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: optionalHttpUrlSchema,
   OTEL_TRACES_SAMPLER_ARG: z

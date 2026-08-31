@@ -48,6 +48,119 @@
   },
   "openapi": "3.0.0",
   "paths": {
+    "/health/live": {
+      "get": {
+        "operationId": "getApiLiveness",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "service": {
+                      "example": "threads-of-gold-api",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "status",
+                    "timestamp"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [],
+        "summary": "Check whether the API process is alive",
+        "tags": [
+          "operations"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "getApiReadiness",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "service": {
+                      "example": "threads-of-gold-api",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "status",
+                    "timestamp"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "service": {
+                      "example": "threads-of-gold-api",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "status",
+                    "timestamp"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [],
+        "summary": "Check whether the API can receive traffic",
+        "tags": [
+          "operations"
+        ]
+      }
+    },
     "/v1": {
       "get": {
         "operationId": "getServiceFoundation",
@@ -68,6 +181,53 @@
         "summary": "Read the public API foundation metadata",
         "tags": [
           "foundation"
+        ]
+      }
+    },
+    "/version": {
+      "get": {
+        "operationId": "getApiVersion",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "environment": {
+                      "example": "local",
+                      "type": "string"
+                    },
+                    "release": {
+                      "example": "local",
+                      "type": "string"
+                    },
+                    "service": {
+                      "example": "threads-of-gold-api",
+                      "type": "string"
+                    },
+                    "version": {
+                      "example": "0.1.0",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "environment",
+                    "release",
+                    "service",
+                    "version"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [],
+        "summary": "Read the deployed API version",
+        "tags": [
+          "operations"
         ]
       }
     }

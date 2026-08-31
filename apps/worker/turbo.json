@@ -5,6 +5,8 @@
     "dev": {
       "env": [
         "APP_ENV",
+        "HEALTH_HOST",
+        "HEALTH_PORT",
         "LOG_LEVEL",
         "APP_RELEASE",
         "OTEL_ENABLED",

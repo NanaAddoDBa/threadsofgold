@@ -6,7 +6,7 @@ import {
 } from "@nestjs/swagger";
 import { createContractOpenApiComponents } from "@threadsofgold/contracts/openapi";
 
-export const API_SEMANTIC_VERSION = "0.1.0";
+import { API_SEMANTIC_VERSION } from "./service-metadata.js";
 
 export function createApiOpenApiDocument(
   application: INestApplication,

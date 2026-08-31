@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { applicationEnvironmentSchema } from "./common.js";
+import {
+  applicationEnvironmentSchema,
+  hostSchema,
+  portSchema,
+} from "./common.js";
 import {
   addObservabilityEnvironmentIssues,
   observabilityEnvironmentShape,
@@ -10,6 +14,8 @@ import { parseEnvironment } from "./parse-environment.js";
 export const workerEnvironmentSchema = z
   .object({
     APP_ENV: applicationEnvironmentSchema,
+    HEALTH_HOST: hostSchema,
+    HEALTH_PORT: portSchema.default(4001),
     ...observabilityEnvironmentShape,
   })
   .strict()
@@ -17,6 +23,8 @@ export const workerEnvironmentSchema = z
 
 export interface WorkerEnvironmentInput {
   APP_ENV?: unknown;
+  HEALTH_HOST?: unknown;
+  HEALTH_PORT?: unknown;
   LOG_LEVEL?: unknown;
   APP_RELEASE?: unknown;
   OTEL_ENABLED?: unknown;

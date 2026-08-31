@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { validateWorkerEnvironment } from "./config/environment.js";
+import { WorkerReadinessService } from "./operations/readiness.service.js";
 
 @Module({
   imports: [
@@ -12,5 +13,6 @@ import { validateWorkerEnvironment } from "./config/environment.js";
       validate: validateWorkerEnvironment,
     }),
   ],
+  providers: [WorkerReadinessService],
 })
 export class AppModule {}

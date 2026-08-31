@@ -3,6 +3,8 @@ import { ConfigModule } from "@nestjs/config";
 
 import { AppController } from "./app.controller.js";
 import { validateApiEnvironment } from "./config/environment.js";
+import { HealthController } from "./operations/health.controller.js";
+import { HealthService } from "./operations/health.service.js";
 
 @Module({
   imports: [
@@ -13,6 +15,7 @@ import { validateApiEnvironment } from "./config/environment.js";
       validate: validateApiEnvironment,
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, HealthController],
+  providers: [HealthService],
 })
 export class AppModule {}

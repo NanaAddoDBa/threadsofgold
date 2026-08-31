@@ -52,6 +52,17 @@ export const portSchema = z
   .pipe(z.coerce.number<string | number>().int().min(1).max(65_535))
   .default(4000);
 
+export const releaseIdentifierSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(200)
+  .regex(
+    /^[A-Za-z0-9][A-Za-z0-9._/@:+-]*$/,
+    "Must be an immutable release identifier without whitespace.",
+  )
+  .default("local");
+
 export function isDeployedEnvironment(
   environment: ApplicationEnvironment,
 ): boolean {

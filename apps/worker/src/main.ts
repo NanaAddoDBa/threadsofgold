@@ -1,11 +1,16 @@
 import "reflect-metadata";
 
+import type { Server } from "node:http";
+
 import type { INestApplicationContext } from "@nestjs/common";
 import type { WorkerEnvironment } from "@threadsofgold/config/worker";
 
 import { workerObservability } from "./instrumentation.js";
-
-const IDLE_INTERVAL_MS = 60_000;
+import { WorkerReadinessService } from "./operations/readiness.service.js";
+import {
+  closeWorkerOperationsServer,
+  startWorkerOperationsServer,
+} from "./operations/server.js";
 
 async function closeApplication(
   application: INestApplicationContext,
@@ -27,6 +32,7 @@ async function closeApplication(
 
 async function bootstrap(): Promise<void> {
   let application: INestApplicationContext | undefined;
+  let operationsServer: Server | undefined;
 
   try {
     const [{ ConfigService }, { createWorkerApplication }] = await Promise.all([
@@ -38,8 +44,19 @@ async function bootstrap(): Promise<void> {
     const configuration = application.get(
       ConfigService<WorkerEnvironment, true>,
     );
-    const idleHandle = setInterval(() => undefined, IDLE_INTERVAL_MS);
     const environment = configuration.get("APP_ENV", { infer: true });
+    const healthHost = configuration.get("HEALTH_HOST", { infer: true });
+    const healthPort = configuration.get("HEALTH_PORT", { infer: true });
+    const release = configuration.get("APP_RELEASE", { infer: true });
+    const readiness = application.get(WorkerReadinessService);
+    operationsServer = await startWorkerOperationsServer({
+      environment,
+      host: healthHost,
+      logger: workerObservability.logger,
+      port: healthPort,
+      readiness,
+      release,
+    });
     let shutdownPromise: Promise<void> | undefined;
 
     const shutdown = (signal: NodeJS.Signals): Promise<void> => {
@@ -48,7 +65,9 @@ async function bootstrap(): Promise<void> {
           event: "worker_shutdown_requested",
           signal,
         });
-        clearInterval(idleHandle);
+        if (operationsServer !== undefined) {
+          await closeWorkerOperationsServer(operationsServer);
+        }
         const closed = await closeApplication(
           application as INestApplicationContext,
           "worker_shutdown_failed",
@@ -68,6 +87,11 @@ async function bootstrap(): Promise<void> {
       queue_connected: false,
     });
   } catch (error) {
+    if (operationsServer !== undefined) {
+      await closeWorkerOperationsServer(operationsServer).catch(
+        () => undefined,
+      );
+    }
     if (application !== undefined) {
       await closeApplication(application, "worker_startup_cleanup_failed");
     }

@@ -118,4 +118,24 @@ describe("generated OpenAPI contract", () => {
       version: "0.1.0",
     });
   });
+
+  it("publishes unversioned operational endpoints for deployment probes", async () => {
+    const document = await readGeneratedContract();
+    const paths = requireRecord(document["paths"], "paths");
+
+    const expectedOperations = [
+      ["/health/live", "getApiLiveness"],
+      ["/health/ready", "getApiReadiness"],
+      ["/version", "getApiVersion"],
+    ] as const;
+
+    for (const [path, operationId] of expectedOperations) {
+      const pathItem = requireRecord(paths[path], `paths.${path}`);
+      const operation = requireRecord(pathItem["get"], `paths.${path}.get`);
+
+      expect(
+        requireString(operation["operationId"], `${path}.operationId`),
+      ).toBe(operationId);
+    }
+  });
 });

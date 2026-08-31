@@ -4,6 +4,7 @@ export {
   isDeployedEnvironment,
   isLocalOrUnspecifiedOrigin,
   portSchema,
+  releaseIdentifierSchema,
   webOriginSchema,
   type ApplicationEnvironment,
 } from "./common.js";

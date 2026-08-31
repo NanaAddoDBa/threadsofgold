@@ -4,6 +4,7 @@ import {
   applicationEnvironmentSchema,
   isDeployedEnvironment,
   isLocalOrUnspecifiedOrigin,
+  releaseIdentifierSchema,
   webOriginSchema,
 } from "./common.js";
 import { parseEnvironment } from "./parse-environment.js";
@@ -11,6 +12,7 @@ import { parseEnvironment } from "./parse-environment.js";
 export const storefrontServerEnvironmentSchema = z
   .object({
     APP_ENV: applicationEnvironmentSchema,
+    APP_RELEASE: releaseIdentifierSchema,
   })
   .strict();
 
@@ -47,6 +49,7 @@ export const storefrontEnvironmentSchema = storefrontServerEnvironmentSchema
 
 export interface StorefrontServerEnvironmentInput {
   APP_ENV?: unknown;
+  APP_RELEASE?: unknown;
 }
 
 export interface StorefrontPublicEnvironmentInput {

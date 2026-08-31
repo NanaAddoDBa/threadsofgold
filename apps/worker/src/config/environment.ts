@@ -8,6 +8,8 @@ export function validateWorkerEnvironment(
 ): WorkerEnvironment {
   return parseWorkerEnvironment({
     APP_ENV: environment["APP_ENV"],
+    HEALTH_HOST: environment["HEALTH_HOST"],
+    HEALTH_PORT: environment["HEALTH_PORT"],
     LOG_LEVEL: environment["LOG_LEVEL"],
     APP_RELEASE: environment["APP_RELEASE"],
     OTEL_ENABLED: environment["OTEL_ENABLED"],
