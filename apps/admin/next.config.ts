@@ -1,3 +1,5 @@
+import { resolve } from "node:path";
+
 import type { NextConfig } from "next";
 import { parseAdminEnvironment } from "@threadsofgold/config/admin";
 
@@ -9,6 +11,8 @@ parseAdminEnvironment({
 
 const nextConfig: NextConfig = {
   agentRules: false,
+  output: "standalone",
+  outputFileTracingRoot: resolve(process.cwd(), "../.."),
   poweredByHeader: false,
 };
 

@@ -8,13 +8,20 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /workspace
 
-RUN corepack enable && corepack prepare pnpm@10.18.3 --activate
+RUN apt-get update \
+  && apt-get install --yes --no-install-recommends ca-certificates openssl \
+  && rm -rf /var/lib/apt/lists/* \
+  && corepack enable \
+  && corepack prepare pnpm@10.18.3 --activate
 
 FROM base AS dependencies
 
 COPY . .
 
-RUN pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=threadsofgold-pnpm,target=/pnpm/store \
+  pnpm install --frozen-lockfile
+
+RUN DATABASE_URL=postgresql://build:build@127.0.0.1:5432/build pnpm database:generate
 
 FROM dependencies AS build-storefront
 
@@ -42,21 +49,35 @@ FROM dependencies AS build-worker
 
 RUN pnpm exec turbo run build --filter=@threadsofgold/worker...
 
+FROM build-api AS deploy-api
+
+RUN --mount=type=cache,id=threadsofgold-pnpm,target=/pnpm/store \
+  pnpm --filter @threadsofgold/api deploy --prod --legacy /deploy/api
+
+FROM build-worker AS deploy-worker
+
+RUN --mount=type=cache,id=threadsofgold-pnpm,target=/pnpm/store \
+  pnpm --filter @threadsofgold/worker deploy --prod --legacy /deploy/worker
+
 FROM base AS storefront
 
 ARG APP_RELEASE=container
 ENV APP_ENV=production
 ENV APP_RELEASE=${APP_RELEASE}
+ENV FOUNDATION_RUNTIME_ENABLED=false
 ENV HOSTNAME=0.0.0.0
 ENV NEXT_PUBLIC_STOREFRONT_URL=https://storefront.threadsofgold.invalid
 ENV NODE_ENV=production
 ENV PORT=3000
 
-COPY --chown=node:node --from=build-storefront /workspace /workspace
+COPY --chown=node:node --from=build-storefront /workspace/apps/storefront/.next/standalone /app
+COPY --chown=node:node --from=build-storefront /workspace/apps/storefront/.next/static /app/apps/storefront/.next/static
+COPY --chown=node:node --from=build-storefront /workspace/apps/storefront/public /app/apps/storefront/public
 
+WORKDIR /app/apps/storefront
 USER node
 EXPOSE 3000
-CMD ["./apps/storefront/node_modules/.bin/next", "start"]
+CMD ["node", "server.js"]
 
 FROM base AS admin
 
@@ -68,35 +89,44 @@ ENV NEXT_PUBLIC_ADMIN_URL=https://admin.threadsofgold.invalid
 ENV NODE_ENV=production
 ENV PORT=3001
 
-COPY --chown=node:node --from=build-admin /workspace /workspace
+COPY --chown=node:node --from=build-admin /workspace/apps/admin/.next/standalone /app
+COPY --chown=node:node --from=build-admin /workspace/apps/admin/.next/static /app/apps/admin/.next/static
 
+WORKDIR /app/apps/admin
 USER node
 EXPOSE 3001
-CMD ["./apps/admin/node_modules/.bin/next", "start", "--port", "3001"]
+CMD ["node", "server.js"]
 
 FROM base AS api
 
 ARG APP_RELEASE=container
 ENV APP_ENV=production
 ENV APP_RELEASE=${APP_RELEASE}
+ENV FOUNDATION_RUNTIME_ENABLED=false
 ENV HOST=0.0.0.0
 ENV NODE_ENV=production
 ENV PORT=4000
 
-COPY --chown=node:node --from=build-api /workspace /workspace
+COPY --chown=node:node --from=deploy-api /deploy/api /app
 
+WORKDIR /app
 USER node
 EXPOSE 4000
-CMD ["node", "--enable-source-maps", "apps/api/dist/main.js"]
+CMD ["node", "--enable-source-maps", "dist/main.js"]
 
 FROM base AS worker
 
 ARG APP_RELEASE=container
 ENV APP_ENV=production
 ENV APP_RELEASE=${APP_RELEASE}
+ENV FOUNDATION_RUNTIME_ENABLED=false
+ENV HEALTH_HOST=0.0.0.0
+ENV HEALTH_PORT=4001
 ENV NODE_ENV=production
 
-COPY --chown=node:node --from=build-worker /workspace /workspace
+COPY --chown=node:node --from=deploy-worker /deploy/worker /app
 
+WORKDIR /app
 USER node
-CMD ["node", "--enable-source-maps", "apps/worker/dist/main.js"]
+EXPOSE 4001
+CMD ["node", "--enable-source-maps", "dist/main.js"]
