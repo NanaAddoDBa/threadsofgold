@@ -36,6 +36,15 @@
       "reason": "Platform-specific Sharp/libvips distribution used by the Next.js image pipeline; legal review is still required before production launch.",
       "compensatingControl": "Limit the exception to @img/sharp-* packages, retain notices, and re-evaluate replacement or redistribution obligations before release.",
       "expires": "2026-09-30"
+    },
+    {
+      "license": "LGPL-3.0-or-later",
+      "packagePatterns": ["@img/sharp-libvips-*"],
+      "owner": "Threads of Gold engineering",
+      "approval": "temporary-engineering-review",
+      "reason": "Linux Sharp packages report the bundled libvips license separately; legal review is still required before production launch.",
+      "compensatingControl": "Limit the exception to platform-specific @img/sharp-libvips-* packages, retain notices, and re-evaluate replacement or redistribution obligations before release.",
+      "expires": "2026-09-30"
     }
   ]
 }
