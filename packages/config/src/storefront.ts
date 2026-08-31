@@ -2,8 +2,11 @@ import { z } from "zod";
 
 import {
   applicationEnvironmentSchema,
+  booleanEnvironmentSchema,
   isDeployedEnvironment,
   isLocalOrUnspecifiedOrigin,
+  releaseIdentifierSchema,
+  optionalWebOriginSchema,
   webOriginSchema,
 } from "./common.js";
 import { parseEnvironment } from "./parse-environment.js";
@@ -11,8 +14,50 @@ import { parseEnvironment } from "./parse-environment.js";
 export const storefrontServerEnvironmentSchema = z
   .object({
     APP_ENV: applicationEnvironmentSchema,
+    APP_RELEASE: releaseIdentifierSchema,
+    FOUNDATION_RUNTIME_ENABLED: booleanEnvironmentSchema.default(false),
+    FOUNDATION_VERIFIER_TOKEN: z.string().trim().min(32).max(200).optional(),
+    INTERNAL_API_URL: optionalWebOriginSchema,
   })
-  .strict();
+  .strict()
+  .superRefine((environment, context) => {
+    if (!environment.FOUNDATION_RUNTIME_ENABLED) return;
+
+    if (isDeployedEnvironment(environment.APP_ENV)) {
+      context.addIssue({
+        code: "custom",
+        message: "The local walking skeleton cannot be enabled when deployed.",
+        path: ["FOUNDATION_RUNTIME_ENABLED"],
+      });
+    }
+
+    if (environment.FOUNDATION_VERIFIER_TOKEN === undefined) {
+      context.addIssue({
+        code: "custom",
+        message: "Required when FOUNDATION_RUNTIME_ENABLED is true.",
+        path: ["FOUNDATION_VERIFIER_TOKEN"],
+      });
+    }
+
+    if (environment.INTERNAL_API_URL === undefined) {
+      context.addIssue({
+        code: "custom",
+        message: "Required when FOUNDATION_RUNTIME_ENABLED is true.",
+        path: ["INTERNAL_API_URL"],
+      });
+    }
+
+    if (
+      environment.INTERNAL_API_URL !== undefined &&
+      !isLocalOrUnspecifiedOrigin(environment.INTERNAL_API_URL)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "The local walking skeleton requires a loopback API origin.",
+        path: ["INTERNAL_API_URL"],
+      });
+    }
+  });
 
 export const storefrontPublicEnvironmentSchema = z
   .object({
@@ -21,7 +66,7 @@ export const storefrontPublicEnvironmentSchema = z
   .strict();
 
 export const storefrontEnvironmentSchema = storefrontServerEnvironmentSchema
-  .extend(storefrontPublicEnvironmentSchema.shape)
+  .safeExtend(storefrontPublicEnvironmentSchema.shape)
   .superRefine((environment, context) => {
     if (!isDeployedEnvironment(environment.APP_ENV)) return;
 
@@ -47,6 +92,10 @@ export const storefrontEnvironmentSchema = storefrontServerEnvironmentSchema
 
 export interface StorefrontServerEnvironmentInput {
   APP_ENV?: unknown;
+  APP_RELEASE?: unknown;
+  FOUNDATION_RUNTIME_ENABLED?: unknown;
+  FOUNDATION_VERIFIER_TOKEN?: unknown;
+  INTERNAL_API_URL?: unknown;
 }
 
 export interface StorefrontPublicEnvironmentInput {

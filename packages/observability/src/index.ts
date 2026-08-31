@@ -1,10 +1,28 @@
-export type LogPrimitive = string | number | boolean | null;
-
-export type LogContext = Readonly<Record<string, LogPrimitive>>;
-
-export interface StructuredLogger {
-  debug(message: string, context?: LogContext): void;
-  info(message: string, context?: LogContext): void;
-  warn(message: string, context?: LogContext): void;
-  error(message: string, context?: LogContext): void;
-}
+export {
+  getCorrelationContext,
+  getOrCreateCorrelationId,
+  normalizeCorrelationId,
+  runWithCorrelationContext,
+  type CorrelationContext,
+} from "./context.js";
+export { resolveWithin } from "./lifecycle.js";
+export {
+  getErrorType,
+  pinoRedactionPaths,
+  REDACTED_VALUE,
+  redactSensitiveText,
+  sanitizeLogContext,
+  sanitizeLogMessage,
+} from "./redaction.js";
+export {
+  initializeObservability,
+  type ObservabilityOptions,
+  type ObservabilityRuntime,
+} from "./runtime.js";
+export type {
+  LogContext,
+  LogLevel,
+  LogPrimitive,
+  LogValue,
+  StructuredLogger,
+} from "./types.js";

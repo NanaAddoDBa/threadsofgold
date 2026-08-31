@@ -214,23 +214,25 @@ Implementation note (2026-08-30): the repository policy, CODEOWNERS file, pull-r
 
 Implementation note (2026-08-30, P1.02-P1.06): pull request #3 delivers pnpm workspaces and Turborepo; separate storefront, admin, API, and worker applications; the shared UI, contracts, database, auth, observability, configuration, lint, TypeScript, and test-utility package boundaries; strict TypeScript and zero-warning lint/format/import controls; and fail-fast, redacted environment validation with four committed secret-free examples. Its initial remote `Quality` run passed after frozen installation, and focused local probes verified API HTTP startup, worker startup, strict cache declarations, required configuration, loopback-safe defaults, rejected invalid ports and stages, and rejected malformed, local, or insecure deployed origins without echoing submitted values. P1.07 and later Phase 1 items remain open.
 
+Implementation note (2026-08-31, P1.07-P1.17): pull request #4 completes the remaining engineering foundation with correlated and redacted observability; versioned OpenAPI and a generated, status-aware client; unit, contract, Testcontainers, Playwright, axe, and k6 foundations; clean-clone build and test gates; dependency, secret, license, source, container, CodeQL, and software-bill-of-material controls; Renovate policy validation; local PostgreSQL, Redis, Mailpit, and Paystack-compatible mock services; governance templates; deployable health, readiness, and version endpoints; and a protected synthetic walking skeleton. Local execution verified service health, denial without the verifier token, an idempotent request identifier, PostgreSQL persistence, Redis-backed worker delivery, Mailpit capture, and end-to-end ULID correlation. The required remote `Quality` workflow verifies the clean Linux install, generation, tests, builds, security controls, runtime images, and browser journeys before merge. Terraform validation is discovery-only until Phase 2 introduces `.tf` roots. This milestone does not claim a deployed environment or any production commerce capability.
+
 - [x] P1.01 Define branch protection, conventional commits, CODEOWNERS, pull-request template, review requirements, and release policy.
 - [x] P1.02 Initialize pnpm workspaces and Turborepo with pinned Node and pnpm versions.
 - [x] P1.03 Create `storefront`, `admin`, `api`, and `worker` applications.
 - [x] P1.04 Create shared UI, contracts, database, auth, observability, lint, TypeScript, and test packages.
 - [x] P1.05 Enable strict TypeScript, import boundaries, unused-code checks, formatting, and linting.
 - [x] P1.06 Add environment schema validation and committed `.env.example` files with no secrets.
-- [ ] P1.07 Configure structured JSON logging, correlation IDs, redaction, OpenTelemetry, and Sentry release identifiers.
-- [ ] P1.08 Create an API versioning convention and generate OpenAPI in CI.
-- [ ] P1.09 Generate the typed API client and fail CI when the generated contract is stale.
-- [ ] P1.10 Configure Vitest/Jest, Testcontainers, Playwright, axe, and k6 foundations.
-- [ ] P1.11 Add GitHub Actions jobs for lint, typecheck, unit, integration, contract, build, image, Terraform validation, and security scans.
-- [ ] P1.12 Add dependency, secret, license, container, and software-bill-of-material scans.
-- [ ] P1.13 Configure Renovate with grouped low-risk updates and manual review for major, auth, payment, and infrastructure changes.
-- [ ] P1.14 Add local container dependencies for PostgreSQL, Redis, email capture, and Paystack-compatible mocks.
-- [ ] P1.15 Add ADR, threat-model, runbook, and compliance evidence templates.
-- [ ] P1.16 Create health, readiness, and version endpoints for every deployable service.
-- [ ] P1.17 Prove a local request from storefront to API to database and worker.
+- [x] P1.07 Configure structured JSON logging, correlation IDs, redaction, OpenTelemetry, and Sentry release identifiers.
+- [x] P1.08 Create an API versioning convention and generate OpenAPI in CI.
+- [x] P1.09 Generate the typed API client and fail CI when the generated contract is stale.
+- [x] P1.10 Configure Vitest/Jest, Testcontainers, Playwright, axe, and k6 foundations.
+- [x] P1.11 Add GitHub Actions jobs for lint, typecheck, unit, integration, contract, build, image, Terraform validation, and security scans.
+- [x] P1.12 Add dependency, secret, license, container, and software-bill-of-material scans.
+- [x] P1.13 Configure Renovate with grouped low-risk updates and manual review for major, auth, payment, and infrastructure changes.
+- [x] P1.14 Add local container dependencies for PostgreSQL, Redis, email capture, and Paystack-compatible mocks.
+- [x] P1.15 Add ADR, threat-model, runbook, and compliance evidence templates.
+- [x] P1.16 Create health, readiness, and version endpoints for every deployable service.
+- [x] P1.17 Prove a local request from storefront to API to database and worker.
 
 **Exit gate:** a clean clone can install, test, build, start, and exercise the walking skeleton from documented commands.
 

@@ -1,0 +1,7 @@
+{
+  "extends": "@threadsofgold/typescript-config/node-library.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "orval.config.ts"]
+}

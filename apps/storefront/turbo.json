@@ -3,11 +3,23 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "env": ["APP_ENV", "NEXT_PUBLIC_STOREFRONT_URL"],
+      "env": [
+        "APP_ENV",
+        "APP_RELEASE",
+        "FOUNDATION_RUNTIME_ENABLED",
+        "INTERNAL_API_URL",
+        "NEXT_PUBLIC_STOREFRONT_URL"
+      ],
       "inputs": ["$TURBO_DEFAULT$", ".env*"]
     },
     "dev": {
-      "env": ["APP_ENV", "NEXT_PUBLIC_STOREFRONT_URL"]
+      "env": [
+        "APP_ENV",
+        "APP_RELEASE",
+        "FOUNDATION_RUNTIME_ENABLED",
+        "INTERNAL_API_URL",
+        "NEXT_PUBLIC_STOREFRONT_URL"
+      ]
     }
   }
 }

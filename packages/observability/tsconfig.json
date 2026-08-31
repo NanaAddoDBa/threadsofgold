@@ -1,7 +1,8 @@
 {
   "extends": "@threadsofgold/typescript-config/node-library.json",
   "compilerOptions": {
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -11,6 +14,18 @@
     "./service": {
       "types": "./src/service.ts",
       "default": "./dist/service.js"
+    },
+    "./openapi": {
+      "types": "./src/openapi.ts",
+      "default": "./dist/openapi.js"
+    },
+    "./foundation-request": {
+      "types": "./src/foundation-request.ts",
+      "default": "./dist/foundation-request.js"
+    },
+    "./http-error": {
+      "types": "./src/http-error.ts",
+      "default": "./dist/http-error.js"
     }
   },
   "scripts": {
@@ -19,6 +34,7 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "9.1.0",
     "zod": "4.5.4"
   },
   "devDependencies": {

@@ -1,0 +1,16 @@
+{
+  "id": "3f65e7dc-b7f3-4ef4-8b56-80f8e782629a",
+  "name": "Reject unmatched local transaction requests",
+  "priority": 100,
+  "request": {
+    "method": "ANY",
+    "urlPathPattern": "/transaction/.*"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "unauthorized.json"
+  }
+}

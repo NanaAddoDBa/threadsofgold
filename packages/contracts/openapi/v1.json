@@ -1,0 +1,400 @@
+{
+  "components": {
+    "parameters": {},
+    "schemas": {
+      "FoundationRequest": {
+        "description": "Synthetic, non-customer request used only to prove the local Phase 1 system path.",
+        "properties": {
+          "attempts": {
+            "example": 1,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "completedAt": {
+            "example": "2026-08-31T03:00:01.000Z",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "correlationId": {
+            "description": "Normalized UUID or ULID request correlation identifier.",
+            "example": "9f7ddb2e-fda7-493e-84a6-1212e37437bb",
+            "pattern": "^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|[0-7][0-9A-HJKMNP-TV-Z]{25})$",
+            "type": "string"
+          },
+          "createdAt": {
+            "example": "2026-08-31T03:00:00.000Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "description": "Synthetic local walking-skeleton request identifier.",
+            "example": "076e287a-b66f-4a0c-90dc-815320487ef2",
+            "format": "uuid",
+            "type": "string"
+          },
+          "lastErrorType": {
+            "example": null,
+            "maxLength": 120,
+            "nullable": true,
+            "type": "string"
+          },
+          "status": {
+            "description": "Current local walking-skeleton processing state.",
+            "enum": ["pending", "processing", "completed", "failed"],
+            "example": "completed",
+            "type": "string"
+          },
+          "updatedAt": {
+            "example": "2026-08-31T03:00:01.000Z",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "attempts",
+          "completedAt",
+          "correlationId",
+          "createdAt",
+          "id",
+          "lastErrorType",
+          "status",
+          "updatedAt"
+        ],
+        "type": "object"
+      },
+      "HttpErrorResponse": {
+        "description": "Safe public HTTP error response.",
+        "properties": {
+          "error": {
+            "example": "Bad Request",
+            "minLength": 1,
+            "type": "string"
+          },
+          "message": {
+            "example": "A valid Idempotency-Key is required.",
+            "minLength": 1,
+            "type": "string"
+          },
+          "statusCode": {
+            "example": 400,
+            "maximum": 599,
+            "minimum": 400,
+            "type": "integer"
+          }
+        },
+        "required": ["error", "message", "statusCode"],
+        "type": "object"
+      },
+      "ServiceFoundation": {
+        "description": "Public metadata for the versioned Threads of Gold API.",
+        "properties": {
+          "service": {
+            "description": "Stable service identifier.",
+            "enum": ["threads-of-gold-api"],
+            "example": "threads-of-gold-api",
+            "type": "string"
+          },
+          "status": {
+            "description": "Current engineering-foundation status.",
+            "enum": ["foundation"],
+            "example": "foundation",
+            "type": "string"
+          },
+          "version": {
+            "description": "Semantic application version, separate from a release ID.",
+            "example": "0.1.0",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "type": "string"
+          }
+        },
+        "required": ["service", "status", "version"],
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {},
+    "description": "Versioned public contract for the Threads of Gold engineering foundation.",
+    "license": {
+      "name": "Proprietary"
+    },
+    "title": "Threads of Gold API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/health/live": {
+      "get": {
+        "operationId": "getApiLiveness",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "service": {
+                      "example": "threads-of-gold-api",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["service", "status", "timestamp"],
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [],
+        "summary": "Check whether the API process is alive",
+        "tags": ["operations"]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "getApiReadiness",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "service": {
+                      "example": "threads-of-gold-api",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["service", "status", "timestamp"],
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "service": {
+                      "example": "threads-of-gold-api",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "format": "date-time",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["service", "status", "timestamp"],
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [],
+        "summary": "Check whether the API can receive traffic",
+        "tags": ["operations"]
+      }
+    },
+    "/v1": {
+      "get": {
+        "operationId": "getServiceFoundation",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceFoundation"
+                }
+              }
+            },
+            "description": "Stable metadata for the current API foundation."
+          }
+        },
+        "security": [],
+        "summary": "Read the public API foundation metadata",
+        "tags": ["foundation"]
+      }
+    },
+    "/v1/foundation/requests": {
+      "post": {
+        "description": "Available only in local and test environments. It carries no customer, order, or payment data.",
+        "operationId": "createFoundationRequest",
+        "parameters": [
+          {
+            "description": "Stable retry key for this synthetic request.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 200,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9._-]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoundationRequest"
+                }
+              }
+            },
+            "description": ""
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                }
+              }
+            },
+            "description": "The idempotency key is invalid."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                }
+              }
+            },
+            "description": "The local walking skeleton is disabled."
+          }
+        },
+        "security": [],
+        "summary": "Create an idempotent synthetic walking-skeleton request",
+        "tags": ["foundation"]
+      }
+    },
+    "/v1/foundation/requests/{id}": {
+      "get": {
+        "description": "Available only in local and test environments. It carries no customer, order, or payment data.",
+        "operationId": "getFoundationRequest",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoundationRequest"
+                }
+              }
+            },
+            "description": ""
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                }
+              }
+            },
+            "description": "The request identifier is invalid."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                }
+              }
+            },
+            "description": "The request or local runtime is unavailable."
+          }
+        },
+        "security": [],
+        "summary": "Read a synthetic walking-skeleton request",
+        "tags": ["foundation"]
+      }
+    },
+    "/version": {
+      "get": {
+        "operationId": "getApiVersion",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "environment": {
+                      "example": "local",
+                      "type": "string"
+                    },
+                    "release": {
+                      "example": "local",
+                      "type": "string"
+                    },
+                    "service": {
+                      "example": "threads-of-gold-api",
+                      "type": "string"
+                    },
+                    "version": {
+                      "example": "0.1.0",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["environment", "release", "service", "version"],
+                  "type": "object"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [],
+        "summary": "Read the deployed API version",
+        "tags": ["operations"]
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Current API origin",
+      "url": "/"
+    }
+  ],
+  "tags": []
+}

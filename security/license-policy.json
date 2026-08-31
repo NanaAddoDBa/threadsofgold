@@ -1,0 +1,50 @@
+{
+  "allowedLicenses": [
+    "0BSD",
+    "Apache-2.0",
+    "BlueOak-1.0.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "CC-BY-4.0",
+    "CC0-1.0",
+    "ISC",
+    "MIT",
+    "MIT-0",
+    "MIT and ISC",
+    "MPL-2.0",
+    "Python-2.0",
+    "Unlicense",
+    "(BSD-2-Clause OR MIT OR Apache-2.0)",
+    "(MIT OR WTFPL)"
+  ],
+  "deniedLicenseFragments": ["AGPL-", "GPL-", "LGPL-", "SSPL-"],
+  "exceptions": [
+    {
+      "license": "EPL-2.0",
+      "packagePatterns": ["elkjs"],
+      "owner": "Threads of Gold engineering",
+      "approval": "temporary-engineering-review",
+      "reason": "Prisma Studio introduces elkjs through the Prisma CLI peer graph; the CLI and Studio are not included in the API or worker runtime images, but accountable legal review is still required before production launch.",
+      "compensatingControl": "Keep Prisma CLI tooling outside runtime images, retain notices, and re-run the production license inventory and container contents checks before release.",
+      "expires": "2026-09-30"
+    },
+    {
+      "license": "Apache-2.0 AND LGPL-3.0-or-later",
+      "packagePatterns": ["@img/sharp-*"],
+      "owner": "Threads of Gold engineering",
+      "approval": "temporary-engineering-review",
+      "reason": "Platform-specific Sharp/libvips distribution used by the Next.js image pipeline; legal review is still required before production launch.",
+      "compensatingControl": "Limit the exception to @img/sharp-* packages, retain notices, and re-evaluate replacement or redistribution obligations before release.",
+      "expires": "2026-09-30"
+    },
+    {
+      "license": "LGPL-3.0-or-later",
+      "packagePatterns": ["@img/sharp-libvips-*"],
+      "owner": "Threads of Gold engineering",
+      "approval": "temporary-engineering-review",
+      "reason": "Linux Sharp packages report the bundled libvips license separately; legal review is still required before production launch.",
+      "compensatingControl": "Limit the exception to platform-specific @img/sharp-libvips-* packages, retain notices, and re-evaluate replacement or redistribution obligations before release.",
+      "expires": "2026-09-30"
+    }
+  ]
+}

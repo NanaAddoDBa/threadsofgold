@@ -1,32 +1,112 @@
 import "reflect-metadata";
 
-import { Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { NestFactory } from "@nestjs/core";
+import type { Server } from "node:http";
+
+import type { INestApplicationContext } from "@nestjs/common";
 import type { WorkerEnvironment } from "@threadsofgold/config/worker";
 
-import { AppModule } from "./app.module.js";
+import { workerObservability } from "./instrumentation.js";
+import { WorkerReadinessService } from "./operations/readiness.service.js";
+import {
+  closeWorkerOperationsServer,
+  startWorkerOperationsServer,
+} from "./operations/server.js";
 
-const IDLE_INTERVAL_MS = 60_000;
+async function closeApplication(
+  application: INestApplicationContext,
+  event: string,
+): Promise<boolean> {
+  try {
+    await application.close();
+    return true;
+  } catch (error) {
+    workerObservability.logger.error(
+      "Worker application shutdown failed",
+      { event },
+      error,
+    );
+    workerObservability.reportException(error);
+    return false;
+  }
+}
 
-async function bootstrap() {
-  const app = await NestFactory.createApplicationContext(AppModule);
-  const configuration = app.get(ConfigService<WorkerEnvironment, true>);
-  const logger = new Logger("WorkerBootstrap");
-  const idleHandle = setInterval(() => undefined, IDLE_INTERVAL_MS);
-  const environment = configuration.get("APP_ENV", { infer: true });
+async function bootstrap(): Promise<void> {
+  let application: INestApplicationContext | undefined;
+  let operationsServer: Server | undefined;
 
-  const shutdown = async (signal: NodeJS.Signals) => {
-    logger.log(`Worker foundation received ${signal}`);
-    clearInterval(idleHandle);
-    await app.close();
-  };
+  try {
+    const [{ ConfigService }, { createWorkerApplication }] = await Promise.all([
+      import("@nestjs/config"),
+      import("./create-app.js"),
+    ]);
 
-  process.once("SIGINT", () => void shutdown("SIGINT"));
-  process.once("SIGTERM", () => void shutdown("SIGTERM"));
-  logger.log(
-    `Worker foundation ready in ${environment}; queue processing is not connected`,
-  );
+    application = await createWorkerApplication(workerObservability);
+    const configuration = application.get(
+      ConfigService<WorkerEnvironment, true>,
+    );
+    const environment = configuration.get("APP_ENV", { infer: true });
+    const healthHost = configuration.get("HEALTH_HOST", { infer: true });
+    const healthPort = configuration.get("HEALTH_PORT", { infer: true });
+    const release = configuration.get("APP_RELEASE", { infer: true });
+    const readiness = application.get(WorkerReadinessService);
+    operationsServer = await startWorkerOperationsServer({
+      environment,
+      host: healthHost,
+      logger: workerObservability.logger,
+      port: healthPort,
+      readiness,
+      release,
+    });
+    let shutdownPromise: Promise<void> | undefined;
+
+    const shutdown = (signal: NodeJS.Signals): Promise<void> => {
+      shutdownPromise ??= (async () => {
+        workerObservability.logger.info("Worker shutdown requested", {
+          event: "worker_shutdown_requested",
+          signal,
+        });
+        if (operationsServer !== undefined) {
+          await closeWorkerOperationsServer(operationsServer);
+        }
+        const closed = await closeApplication(
+          application as INestApplicationContext,
+          "worker_shutdown_failed",
+        );
+        await workerObservability.shutdown();
+        process.exitCode = closed ? 0 : 1;
+      })();
+
+      return shutdownPromise;
+    };
+
+    process.once("SIGINT", () => void shutdown("SIGINT"));
+    process.once("SIGTERM", () => void shutdown("SIGTERM"));
+    workerObservability.logger.info("Worker foundation ready", {
+      app_environment: environment,
+      event: "worker_ready",
+      queue_connected: configuration.get("FOUNDATION_RUNTIME_ENABLED", {
+        infer: true,
+      }),
+    });
+  } catch (error) {
+    if (operationsServer !== undefined) {
+      await closeWorkerOperationsServer(operationsServer).catch(
+        () => undefined,
+      );
+    }
+    if (application !== undefined) {
+      await closeApplication(application, "worker_startup_cleanup_failed");
+    }
+
+    workerObservability.logger.fatal(
+      "Worker startup failed",
+      { event: "worker_startup_failed" },
+      error,
+    );
+    workerObservability.reportException(error);
+    await workerObservability.shutdown();
+    process.exitCode = 1;
+  }
 }
 
 await bootstrap();

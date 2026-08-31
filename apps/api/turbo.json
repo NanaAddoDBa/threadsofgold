@@ -3,7 +3,23 @@
   "extends": ["//"],
   "tasks": {
     "dev": {
-      "env": ["APP_ENV", "HOST", "PORT"]
+      "env": [
+        "APP_ENV",
+        "FOUNDATION_RUNTIME_ENABLED",
+        "HOST",
+        "PORT",
+        "LOG_LEVEL",
+        "APP_RELEASE",
+        "OTEL_ENABLED",
+        "OTEL_TRACES_SAMPLER_ARG",
+        "SENTRY_ENABLED"
+      ],
+      "passThroughEnv": [
+        "DATABASE_URL",
+        "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT",
+        "REDIS_URL",
+        "SENTRY_DSN"
+      ]
     }
   }
 }

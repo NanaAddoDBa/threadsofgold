@@ -2,9 +2,15 @@
   "name": "threadsofgold",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "packageManager": "pnpm@10.18.3",
   "engines": {
-    "node": ">=22.14.0 <23"
+    "node": ">=22.23.2 <23"
+  },
+  "pnpm": {
+    "overrides": {
+      "@prisma/config@7.10.0>deepmerge-ts": "8.0.2"
+    }
   },
   "scripts": {
     "dev": "turbo run dev --filter=@threadsofgold/storefront",
@@ -12,15 +18,45 @@
     "dev:admin": "turbo run dev --filter=@threadsofgold/admin",
     "dev:api": "turbo run dev --filter=@threadsofgold/api",
     "dev:worker": "turbo run dev --filter=@threadsofgold/worker",
-    "build": "turbo run build",
+    "build": "pnpm database:generate && turbo run build",
     "lint": "turbo run lint",
-    "typecheck": "turbo run typecheck",
+    "typecheck": "pnpm database:generate && turbo run typecheck",
+    "test": "pnpm test:unit && pnpm test:contract",
+    "test:unit": "vitest run --project unit --coverage",
+    "test:integration": "pnpm database:generate && vitest run --project integration",
+    "test:contract": "vitest run --project contract",
+    "test:e2e": "playwright test --project chromium-desktop --project chromium-mobile",
+    "test:accessibility": "playwright test tests/accessibility",
+    "test:performance": "k6 run tests/performance/storefront-smoke.js",
+    "database:generate": "pnpm --filter @threadsofgold/database generate",
+    "database:migrate:deploy": "pnpm --filter @threadsofgold/database migrate:deploy",
+    "contracts:generate": "pnpm --filter @threadsofgold/api openapi:generate && prettier --write packages/contracts/openapi/v1.json && pnpm --filter @threadsofgold/api-client generate",
+    "contracts:check": "node scripts/check-generated.mjs && redocly lint packages/contracts/openapi/v1.json",
+    "licenses:check": "node scripts/check-licenses.mjs",
+    "renovate:validate": "node scripts/validate-renovate-config.mjs",
+    "local:setup": "node tooling/scripts/local-platform.mjs setup",
+    "local:config": "node tooling/scripts/local-platform.mjs config",
+    "local:up": "node tooling/scripts/local-platform.mjs up",
+    "local:status": "node tooling/scripts/local-platform.mjs status",
+    "local:down": "node tooling/scripts/local-platform.mjs down",
+    "local:reset": "node tooling/scripts/local-platform.mjs reset --confirm-reset",
+    "foundation:verify": "node scripts/verify-walking-skeleton.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm build"
+    "check": "pnpm contracts:check && pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.62.1",
+    "@redocly/cli": "2.49.0",
+    "@types/pg": "8.15.5",
+    "@vitest/coverage-v8": "4.1.11",
+    "axe-core": "4.13.0",
+    "pg": "8.16.3",
     "prettier": "3.9.6",
-    "turbo": "2.10.12"
+    "redis": "5.11.0",
+    "json5": "2.2.3",
+    "turbo": "2.10.12",
+    "vitest": "4.1.11"
   }
 }

@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -15,6 +18,10 @@
     "./api": {
       "types": "./src/api.ts",
       "default": "./dist/api.js"
+    },
+    "./observability": {
+      "types": "./src/observability.ts",
+      "default": "./dist/observability.js"
     },
     "./storefront": {
       "types": "./src/storefront.ts",
