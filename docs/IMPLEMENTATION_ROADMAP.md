@@ -244,6 +244,8 @@ Implementation note (2026-08-31, P1.07-P1.17): pull request #4 completes the rem
 
 Implementation note (2026-08-31, P2.01 preparation): the repository now defines a draft, secret- and live-ID-free six-account AWS Organizations and Control Tower topology; dedicated development, staging, and production workload boundaries; management/core-account no-workload rules; a day-zero management/member-root and non-root bootstrap policy; Control Tower OU baseline and account-enrollment requirements; an explicit managed organization-trail choice; separate home, governed, and workload Region decisions plus a required Region-deny strategy; protected environment mapping interfaces; deterministic structural and resolved mapping-consistency validation; unit tests; and required CI enforcement. This is design and validation evidence only. P2.01 remains open until ADR-0001 and the P0.11/P0.17 dependencies are approved, business-controlled account ownership, root/primary-contact custody, shared-account selection, logging and billing authority are recorded outside Git, the landing zone, OU baselines, account enrollment, centralized member-root administration, and root-use monitoring are established, and controlled landing-zone/drift, Organizations, Control Tower, root-policy, contact, trail, successful role-assumption, caller-identity, and all-Region resource-inventory evidence verifies the intended boundaries. No AWS account, Terraform root, or deployed environment is claimed by this note.
 
+Execution note (2026-08-31): the project owner deferred live AWS account setup and all provider-billable Phase 2 execution. P2.01-P2.20 remain open, the repository preparation remains available for later review, and no deployed environment or AWS charge is claimed. Independent local application and experience work may continue without waiving the Phase 2 production exit gate.
+
 - [ ] P2.01 Establish separate AWS accounts or strongly isolated environments for development, staging, and production.
 - [ ] P2.02 Enable MFA, least-privilege roles, CloudTrail, cost budgets, and security contacts.
 - [ ] P2.03 Bootstrap encrypted remote Terraform state and state locking outside application stacks.
@@ -273,8 +275,10 @@ Implementation note (2026-08-31, P2.01 preparation): the repository now defines 
 **Capabilities:** CAP-03
 **Milestone:** foundation for M2
 
+Implementation note (2026-08-31, P3.02): the accepted experience contract defines the target sitemap, navigation, stable URL rules, production catalogue-query behavior, page inventory, and shared page states. Implemented prototype paths, primary navigation, category links, and category parsing now use one typed configuration, and the current desktop/mobile home-to-product-to-cart journey remains verified. Planned routes, complete URL-backed search/filter/history behavior, support, policies, orders, and merchant pages remain owned by their later implementation slices; this definition does not claim they exist. P3.01 remains open pending final client choices for logo treatment, publication rights and women-first photography, reference brands, and explicit visual acceptance.
+
 - [ ] P3.01 Approve audience, positioning, tone, visual direction, logo usage, photography, and competitor references.
-- [ ] P3.02 Define sitemap, navigation, URL strategy, search behavior, and page inventory.
+- [x] P3.02 Define sitemap, navigation, URL strategy, search behavior, and page inventory.
 - [ ] P3.03 Create mobile-first wireframes for home, collections, product, search, cart, checkout handoff, account, order, support, policies, and admin.
 - [ ] P3.04 Define semantic design tokens for color, type, space, radius, shadow, motion, breakpoints, and focus.
 - [ ] P3.05 Configure Tailwind from semantic tokens; prohibit repeated arbitrary values where a token exists.
