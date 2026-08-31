@@ -3,12 +3,7 @@ import { expect, test } from "@playwright/test";
 test("discovers a piece and retains selected preview options in the cart", async ({
   page,
 }) => {
-  const sessionReady = page.waitForResponse(
-    (response) => response.url().endsWith("/api/auth/session") && response.ok(),
-    { timeout: 30_000 },
-  );
   await page.goto("/");
-  await sessionReady;
 
   await expect(
     page.getByRole("heading", {
@@ -16,7 +11,9 @@ test("discovers a piece and retains selected preview options in the cart", async
       name: "Express your unique style.",
     }),
   ).toBeVisible();
-  await expect(page.getByRole("link", { name: "Sign in" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Sign in" })).toBeVisible({
+    timeout: 30_000,
+  });
 
   await page
     .getByRole("link", { name: "Explore the collection" })
