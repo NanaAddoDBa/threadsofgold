@@ -15,6 +15,7 @@ concurrency:
 env:
   APP_ENV: test
   CI: "true"
+  DATABASE_URL: postgresql://build:build@127.0.0.1:5432/build
   HOST: 127.0.0.1
   NEXT_PUBLIC_ADMIN_URL: http://localhost:3001
   NEXT_PUBLIC_STOREFRONT_URL: http://localhost:3000

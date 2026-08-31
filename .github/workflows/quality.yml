@@ -16,6 +16,7 @@ concurrency:
 env:
   APP_ENV: test
   CI: "true"
+  DATABASE_URL: postgresql://build:build@127.0.0.1:5432/build
   HOST: 127.0.0.1
   NEXT_PUBLIC_ADMIN_URL: http://localhost:3001
   NEXT_PUBLIC_STOREFRONT_URL: http://localhost:3000
@@ -35,6 +36,9 @@ jobs:
 
       - name: Set up workspace
         uses: ./.github/actions/setup-workspace
+
+      - name: Validate dependency update policy
+        run: pnpm renovate:validate
 
       - name: Check formatting
         run: pnpm format:check
@@ -120,7 +124,9 @@ jobs:
         uses: ./.github/actions/setup-workspace
 
       - name: Build application and workspace dependencies
-        run: pnpm exec turbo run build --filter="@threadsofgold/${{ matrix.application }}..."
+        run: |
+          pnpm database:generate
+          pnpm exec turbo run build --filter="@threadsofgold/${{ matrix.application }}..."
 
   e2e_tests:
     name: End-to-end tests
