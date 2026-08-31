@@ -1,6 +1,6 @@
 # Local walking-skeleton runbook
 
-Status: Draft
+Status: validated development procedure
 Owner: engineering
 Last reviewed: 2026-08-31
 
