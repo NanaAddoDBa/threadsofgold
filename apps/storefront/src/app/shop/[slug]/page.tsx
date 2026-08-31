@@ -18,6 +18,7 @@ import {
   BreadcrumbSeparator,
 } from "@threadsofgold/ui/components/breadcrumb";
 import { Button } from "@threadsofgold/ui/components/button";
+import { shopRouteWithCategory, storefrontRoutes } from "@/config/routes";
 import { getProductBySlug, products } from "@/data/products";
 import { formatGhs } from "@/lib/currency";
 
@@ -67,15 +68,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link href="/shop">Shop</Link>
+                    <Link href={storefrontRoutes.shop}>Shop</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link
-                      href={`/shop?category=${product.category.toLowerCase()}`}
-                    >
+                    <Link href={shopRouteWithCategory(product.category)}>
                       {product.category}
                     </Link>
                   </BreadcrumbLink>
@@ -121,7 +120,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <ProductInformation sections={product.information} />
 
                 <Button asChild variant="outline" size="lg">
-                  <Link href="/shop">Back to collection</Link>
+                  <Link href={storefrontRoutes.shop}>Back to collection</Link>
                 </Button>
               </div>
             </div>
@@ -155,7 +154,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </p>
               </div>
               <Link
-                href="/shop"
+                href={storefrontRoutes.shop}
                 className="text-sm underline underline-offset-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
               >
                 View all pieces

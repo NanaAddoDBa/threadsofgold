@@ -12,6 +12,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@threadsofgold/ui/components/empty";
+import { storefrontRoutes } from "@/config/routes";
 
 export default function ProductNotFound() {
   return (
@@ -30,7 +31,7 @@ export default function ProductNotFound() {
           </EmptyHeader>
           <EmptyContent>
             <Button asChild>
-              <Link href="/shop">Explore the collection</Link>
+              <Link href={storefrontRoutes.shop}>Explore the collection</Link>
             </Button>
           </EmptyContent>
         </Empty>

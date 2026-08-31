@@ -3,6 +3,7 @@ import type {
   LoginCredentials,
   RegistrationDetails,
 } from "@/types/auth";
+import { storefrontRoutes } from "@/config/routes";
 
 type FieldErrors = NonNullable<AuthErrorResponse["fieldErrors"]>;
 
@@ -103,13 +104,13 @@ export function parseRegistrationInput(
 }
 
 export function sanitizeReturnPath(value: unknown): string {
-  if (typeof value !== "string") return "/account";
+  if (typeof value !== "string") return storefrontRoutes.account.home;
   if (
     !value.startsWith("/") ||
     value.startsWith("//") ||
     value.startsWith("/api")
   ) {
-    return "/account";
+    return storefrontRoutes.account.home;
   }
   return value;
 }

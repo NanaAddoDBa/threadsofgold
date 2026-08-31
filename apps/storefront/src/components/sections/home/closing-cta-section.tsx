@@ -2,6 +2,7 @@ import { ArrowUpRightIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@threadsofgold/ui/components/button";
+import { storefrontRoutes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 import { homeContent } from "@/content/home";
 
@@ -18,7 +19,7 @@ export function ClosingCtaSection() {
           </p>
           <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
             <Button asChild size="lg">
-              <Link href="/shop">
+              <Link href={storefrontRoutes.shop}>
                 Explore the collection
                 <ArrowUpRightIcon data-icon="inline-end" />
               </Link>

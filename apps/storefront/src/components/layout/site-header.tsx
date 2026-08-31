@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AccountMenu } from "@/components/auth/account-menu";
 import { CartSheet } from "@/components/cart/cart-sheet";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
+import { primaryNavigation, storefrontRoutes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 import { homeContent } from "@/content/home";
 
@@ -19,7 +20,7 @@ export function SiteHeader() {
         </div>
 
         <Link
-          href="/"
+          href={storefrontRoutes.home}
           className="font-heading text-xl leading-none font-medium tracking-[0.08em] sm:text-2xl"
           aria-label="Threads of Gold home"
         >
@@ -30,7 +31,7 @@ export function SiteHeader() {
           aria-label="Primary navigation"
           className="hidden items-center gap-8 lg:flex"
         >
-          {siteConfig.navigation.map((item) => (
+          {primaryNavigation.map((item) => (
             <Link
               key={item.href}
               href={item.href}

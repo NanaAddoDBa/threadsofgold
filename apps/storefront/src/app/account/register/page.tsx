@@ -5,6 +5,7 @@ import { AuthPageShell } from "@/components/auth/auth-page-shell";
 import { RegistrationForm } from "@/components/auth/registration-form";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { accountRouteWithReturnTo, storefrontRoutes } from "@/config/routes";
 import { getCurrentPrototypeUser } from "@/lib/auth/current-user";
 import { sanitizeReturnPath } from "@/lib/auth/validation";
 
@@ -21,11 +22,14 @@ export default async function RegisterPage({
   searchParams,
 }: RegisterPageProps) {
   const user = await getCurrentPrototypeUser();
-  if (user) redirect("/account");
+  if (user) redirect(storefrontRoutes.account.home);
 
   const { next } = await searchParams;
   const returnTo = sanitizeReturnPath(next);
-  const signInHref = `/account/sign-in?next=${encodeURIComponent(returnTo)}`;
+  const signInHref = accountRouteWithReturnTo(
+    storefrontRoutes.account.signIn,
+    returnTo,
+  );
 
   return (
     <>

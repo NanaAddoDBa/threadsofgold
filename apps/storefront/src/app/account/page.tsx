@@ -19,6 +19,7 @@ import {
 import { Badge } from "@threadsofgold/ui/components/badge";
 import { Button } from "@threadsofgold/ui/components/button";
 import { prototypeAuthConfig } from "@/config/auth";
+import { accountRouteWithReturnTo, storefrontRoutes } from "@/config/routes";
 import { getCurrentPrototypeUser } from "@/lib/auth/current-user";
 
 export const metadata: Metadata = {
@@ -30,7 +31,14 @@ export const dynamic = "force-dynamic";
 
 export default async function AccountPage() {
   const user = await getCurrentPrototypeUser();
-  if (!user) redirect("/account/sign-in?next=/account");
+  if (!user) {
+    redirect(
+      accountRouteWithReturnTo(
+        storefrontRoutes.account.signIn,
+        storefrontRoutes.account.home,
+      ),
+    );
+  }
 
   return (
     <>
@@ -105,7 +113,7 @@ export default async function AccountPage() {
                 </p>
                 <div className="mt-auto flex flex-col gap-3 sm:flex-row">
                   <Button asChild variant="secondary" size="lg">
-                    <Link href="/cart">View your bag</Link>
+                    <Link href={storefrontRoutes.cart}>View your bag</Link>
                   </Button>
                   <Button
                     asChild
@@ -113,7 +121,7 @@ export default async function AccountPage() {
                     size="lg"
                     className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
                   >
-                    <Link href="/shop">Explore collection</Link>
+                    <Link href={storefrontRoutes.shop}>Explore collection</Link>
                   </Button>
                 </div>
               </article>

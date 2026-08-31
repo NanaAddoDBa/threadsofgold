@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowDownRightIcon } from "lucide-react";
 
 import { Button } from "@threadsofgold/ui/components/button";
+import { storefrontRoutes } from "@/config/routes";
 import { homeContent } from "@/content/home";
 
 export function HeroSection() {
@@ -24,13 +25,13 @@ export function HeroSection() {
           </div>
           <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
             <Button asChild size="lg">
-              <Link href="/shop">
+              <Link href={storefrontRoutes.shop}>
                 {homeContent.hero.primaryAction}
                 <ArrowDownRightIcon data-icon="inline-end" />
               </Link>
             </Button>
             <a
-              href="#the-house"
+              href={storefrontRoutes.brandStory}
               className="text-sm underline underline-offset-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
             >
               {homeContent.hero.secondaryAction}

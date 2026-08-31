@@ -92,6 +92,10 @@ rules, and public-export-only imports between applications and packages.
 
 The phased capability and feature milestone plan is documented in [Threads of Gold: Atomic Implementation Roadmap](docs/IMPLEMENTATION_ROADMAP.md).
 
+The accepted storefront and merchant page inventory, navigation model, URL rules,
+and catalogue-search behavior are documented in the
+[Sitemap and Navigation Contract](docs/experience/SITEMAP_AND_NAVIGATION.md).
+
 The currently confirmed client inputs and safe prototype assumptions are recorded in [Prototype Requirements](docs/PROTOTYPE_REQUIREMENTS.md).
 
 Requirements engineering resources:

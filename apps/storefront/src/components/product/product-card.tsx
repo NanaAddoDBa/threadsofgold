@@ -4,6 +4,7 @@ import { ArrowUpRightIcon } from "lucide-react";
 
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { Badge } from "@threadsofgold/ui/components/badge";
+import { productRoute } from "@/config/routes";
 import { formatGhs } from "@/lib/currency";
 import { cn } from "@threadsofgold/ui/lib/utils";
 import type { ProductPreview } from "@/types/commerce";
@@ -17,7 +18,7 @@ export function ProductCard({
   product,
   presentation = "open",
 }: ProductCardProps) {
-  const productHref = `/shop/${product.slug}`;
+  const productHref = productRoute(product.slug);
 
   return (
     <article

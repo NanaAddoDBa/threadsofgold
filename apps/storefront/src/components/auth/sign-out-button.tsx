@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@threadsofgold/ui/components/button";
+import { storefrontRoutes } from "@/config/routes";
 
 export function SignOutButton() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export function SignOutButton() {
     const signedOut = await logout();
     setIsSubmitting(false);
     if (signedOut) {
-      router.push("/");
+      router.push(storefrontRoutes.home);
       router.refresh();
     }
   }
