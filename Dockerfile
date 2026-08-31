@@ -1,6 +1,12 @@
 # syntax=docker/dockerfile:1.7
 
-FROM node:22.23.2-bookworm-slim AS base
+FROM node:22.23.2-bookworm-slim AS operating-system
+
+RUN apt-get update \
+  && apt-get install --yes --no-install-recommends ca-certificates openssl \
+  && rm -rf /var/lib/apt/lists/*
+
+FROM operating-system AS build-base
 
 ENV PNPM_HOME=/pnpm
 ENV PATH=${PNPM_HOME}:${PATH}
@@ -8,13 +14,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /workspace
 
-RUN apt-get update \
-  && apt-get install --yes --no-install-recommends ca-certificates openssl \
-  && rm -rf /var/lib/apt/lists/* \
-  && corepack enable \
+RUN corepack enable \
   && corepack prepare pnpm@10.18.3 --activate
 
-FROM base AS dependencies
+FROM build-base AS dependencies
 
 COPY . .
 
@@ -59,7 +62,17 @@ FROM build-worker AS deploy-worker
 RUN --mount=type=cache,id=threadsofgold-pnpm,target=/pnpm/store \
   pnpm --filter @threadsofgold/worker deploy --prod --legacy /deploy/worker
 
-FROM base AS storefront
+FROM operating-system AS runtime-base
+
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Package managers belong only in build stages. Removing them from the runtime
+# image reduces both its attack surface and its software inventory.
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
+  && rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack \
+    /usr/local/bin/pnpm /usr/local/bin/pnpx
+
+FROM runtime-base AS storefront
 
 ARG APP_RELEASE=container
 ENV APP_ENV=production
@@ -79,7 +92,7 @@ USER node
 EXPOSE 3000
 CMD ["node", "server.js"]
 
-FROM base AS admin
+FROM runtime-base AS admin
 
 ARG APP_RELEASE=container
 ENV APP_ENV=production
@@ -97,7 +110,7 @@ USER node
 EXPOSE 3001
 CMD ["node", "server.js"]
 
-FROM base AS api
+FROM runtime-base AS api
 
 ARG APP_RELEASE=container
 ENV APP_ENV=production
@@ -114,7 +127,7 @@ USER node
 EXPOSE 4000
 CMD ["node", "--enable-source-maps", "dist/main.js"]
 
-FROM base AS worker
+FROM runtime-base AS worker
 
 ARG APP_RELEASE=container
 ENV APP_ENV=production
