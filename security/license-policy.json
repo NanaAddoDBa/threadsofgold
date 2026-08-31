@@ -1,0 +1,28 @@
+{
+  "allowedLicenses": [
+    "0BSD",
+    "Apache-2.0",
+    "BlueOak-1.0.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "CC-BY-4.0",
+    "CC0-1.0",
+    "ISC",
+    "MIT",
+    "MPL-2.0",
+    "Python-2.0",
+    "Unlicense"
+  ],
+  "deniedLicenseFragments": ["AGPL-", "GPL-", "LGPL-", "SSPL-"],
+  "exceptions": [
+    {
+      "license": "Apache-2.0 AND LGPL-3.0-or-later",
+      "packagePatterns": ["@img/sharp-*"],
+      "owner": "Threads of Gold engineering",
+      "approval": "temporary-engineering-review",
+      "reason": "Platform-specific Sharp/libvips distribution used by the Next.js image pipeline; legal review is still required before production launch.",
+      "compensatingControl": "Limit the exception to @img/sharp-* packages, retain notices, and re-evaluate replacement or redistribution obligations before release.",
+      "expires": "2026-09-30"
+    }
+  ]
+}
