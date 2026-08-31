@@ -33,7 +33,7 @@
     "contracts:generate": "pnpm --filter @threadsofgold/api openapi:generate && prettier --write packages/contracts/openapi/v1.json && pnpm --filter @threadsofgold/api-client generate",
     "contracts:check": "node scripts/check-generated.mjs && redocly lint packages/contracts/openapi/v1.json",
     "licenses:check": "node scripts/check-licenses.mjs",
-    "renovate:validate": "renovate-config-validator --strict renovate.json5",
+    "renovate:validate": "node scripts/validate-renovate-config.mjs",
     "local:setup": "node tooling/scripts/local-platform.mjs setup",
     "local:config": "node tooling/scripts/local-platform.mjs config",
     "local:up": "node tooling/scripts/local-platform.mjs up",
@@ -55,7 +55,7 @@
     "pg": "8.16.3",
     "prettier": "3.9.6",
     "redis": "5.11.0",
-    "renovate": "41.173.1",
+    "json5": "2.2.3",
     "turbo": "2.10.12",
     "vitest": "4.1.11"
   }
