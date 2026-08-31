@@ -3,8 +3,9 @@ import { defineConfig, devices } from "@playwright/test";
 const baseUrl = process.env["PLAYWRIGHT_BASE_URL"] ?? "http://127.0.0.1:3000";
 const skipWebServer = process.env["PLAYWRIGHT_SKIP_WEB_SERVER"] === "1";
 const defaultWebServerCommand = process.env["CI"]
-  ? "pnpm exec turbo run build --filter=@threadsofgold/storefront... && pnpm --filter @threadsofgold/storefront start"
+  ? "pnpm exec turbo run build --filter=@threadsofgold/storefront... && node scripts/serve-storefront-standalone.mjs"
   : "pnpm dev:storefront";
+const storefrontUrl = new URL(baseUrl);
 
 export default defineConfig({
   expect: {
@@ -51,7 +52,9 @@ export default defineConfig({
             defaultWebServerCommand,
           env: {
             APP_ENV: "local",
+            HOSTNAME: storefrontUrl.hostname,
             NEXT_PUBLIC_STOREFRONT_URL: baseUrl,
+            PORT: storefrontUrl.port || "3000",
           },
           reuseExistingServer: !process.env["CI"],
           timeout: 240_000,
