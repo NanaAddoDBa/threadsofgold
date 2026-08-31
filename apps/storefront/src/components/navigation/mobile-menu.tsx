@@ -14,6 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@threadsofgold/ui/components/sheet";
+import { primaryNavigation, storefrontRoutes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 
 export function MobileMenu() {
@@ -32,7 +33,7 @@ export function MobileMenu() {
           <SheetDescription>{siteConfig.tagline}</SheetDescription>
         </SheetHeader>
         <nav aria-label="Mobile navigation" className="flex flex-col px-4">
-          {siteConfig.navigation.map((item, index) => (
+          {primaryNavigation.map((item, index) => (
             <SheetClose key={item.href} asChild>
               <Link
                 href={item.href}
@@ -47,7 +48,11 @@ export function MobileMenu() {
           ))}
           <SheetClose asChild>
             <Link
-              href={user ? "/account" : "/account/sign-in"}
+              href={
+                user
+                  ? storefrontRoutes.account.home
+                  : storefrontRoutes.account.signIn
+              }
               className="flex items-center justify-between border-b py-5 font-heading text-3xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
             >
               <span className="inline-flex items-center gap-3">
@@ -55,7 +60,7 @@ export function MobileMenu() {
                 {user ? "My Account" : "Sign In"}
               </span>
               <span className="font-sans text-xs text-muted-foreground">
-                {String(siteConfig.navigation.length + 1).padStart(2, "0")}
+                {String(primaryNavigation.length + 1).padStart(2, "0")}
               </span>
             </Link>
           </SheetClose>

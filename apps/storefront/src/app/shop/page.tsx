@@ -4,6 +4,7 @@ import { HeritageDivider } from "@/components/brand/heritage-divider";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { ProductCatalogue } from "@/components/product/product-catalogue";
+import { parsePrototypeShopCategory } from "@/config/routes";
 import { products } from "@/data/products";
 
 export const metadata: Metadata = {
@@ -18,8 +19,7 @@ interface ShopPageProps {
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
   const { category } = await searchParams;
-  const initialCategory =
-    category === "tops" || category === "menswear" ? category : "all";
+  const initialCategory = parsePrototypeShopCategory(category);
 
   return (
     <>

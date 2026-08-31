@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { storefrontRoutes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 
 export function SiteFooter() {
@@ -16,7 +17,7 @@ export function SiteFooter() {
         </div>
         <div className="flex flex-col gap-3 text-sm md:items-end">
           <Link
-            href="/account/sign-in"
+            href={storefrontRoutes.account.signIn}
             className="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
           >
             Client account

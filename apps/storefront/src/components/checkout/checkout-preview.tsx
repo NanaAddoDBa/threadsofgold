@@ -47,6 +47,7 @@ import {
   SelectValue,
 } from "@threadsofgold/ui/components/select";
 import { Separator } from "@threadsofgold/ui/components/separator";
+import { storefrontRoutes } from "@/config/routes";
 import { deliveryMethods, ghanaRegions } from "@/data/ghana";
 import { formatGhs } from "@/lib/currency";
 import type { CartLine } from "@/types/commerce";
@@ -92,13 +93,13 @@ export function CheckoutPreview() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/shop">Shop</Link>
+                <Link href={storefrontRoutes.shop}>Shop</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/cart">Cart</Link>
+                <Link href={storefrontRoutes.cart}>Cart</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -128,7 +129,7 @@ export function CheckoutPreview() {
               </div>
               <div className="flex w-full max-w-sm flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/shop"
+                  href={storefrontRoutes.shop}
                   className={buttonVariants({
                     size: "lg",
                     className: "h-11 flex-1",
@@ -164,7 +165,7 @@ export function CheckoutPreview() {
             </EmptyHeader>
             <EmptyContent>
               <Link
-                href="/shop"
+                href={storefrontRoutes.shop}
                 className={buttonVariants({ size: "lg", className: "h-11" })}
               >
                 Explore the collection

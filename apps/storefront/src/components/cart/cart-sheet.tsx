@@ -25,6 +25,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@threadsofgold/ui/components/sheet";
+import { storefrontRoutes } from "@/config/routes";
 import { formatGhs } from "@/lib/currency";
 
 export function CartSheet() {
@@ -109,14 +110,17 @@ export function CartSheet() {
             <div className="grid gap-2 sm:grid-cols-2">
               <SheetClose asChild>
                 <Link
-                  href="/shop"
+                  href={storefrontRoutes.shop}
                   className={buttonVariants({ variant: "outline", size: "lg" })}
                 >
                   Continue shopping
                 </Link>
               </SheetClose>
               <SheetClose asChild>
-                <Link href="/cart" className={buttonVariants({ size: "lg" })}>
+                <Link
+                  href={storefrontRoutes.cart}
+                  className={buttonVariants({ size: "lg" })}
+                >
                   Review selection
                 </Link>
               </SheetClose>

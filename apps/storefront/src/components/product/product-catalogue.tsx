@@ -30,20 +30,15 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@threadsofgold/ui/components/toggle-group";
-import type {
-  ProductCategory,
-  ProductPreview,
-  ProductSort,
-} from "@/types/commerce";
-
-type CategoryFilter = "all" | Lowercase<ProductCategory>;
+import type { PrototypeShopCategoryFilter } from "@/config/routes";
+import type { ProductPreview, ProductSort } from "@/types/commerce";
 
 const categoryOptions = [
   { value: "all", label: "All pieces" },
   { value: "tops", label: "Tops" },
   { value: "menswear", label: "Menswear" },
 ] as const satisfies readonly {
-  value: CategoryFilter;
+  value: PrototypeShopCategoryFilter;
   label: string;
 }[];
 
@@ -56,7 +51,7 @@ const sortOptions = [
 
 interface ProductCatalogueProps {
   products: readonly ProductPreview[];
-  initialCategory?: CategoryFilter;
+  initialCategory?: PrototypeShopCategoryFilter;
 }
 
 function sortProducts(
@@ -90,7 +85,8 @@ export function ProductCatalogue({
 }: ProductCatalogueProps) {
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
-  const [category, setCategory] = useState<CategoryFilter>(initialCategory);
+  const [category, setCategory] =
+    useState<PrototypeShopCategoryFilter>(initialCategory);
   const [sort, setSort] = useState<ProductSort>("featured");
 
   const visibleProducts = useMemo(() => {
@@ -147,7 +143,7 @@ export function ProductCatalogue({
           value={category}
           onValueChange={(value) => {
             if (value) {
-              setCategory(value as CategoryFilter);
+              setCategory(value as PrototypeShopCategoryFilter);
             }
           }}
           aria-label="Filter products by category"

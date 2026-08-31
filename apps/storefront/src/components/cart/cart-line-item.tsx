@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { useCart } from "@/components/cart/cart-provider";
 import { Button } from "@threadsofgold/ui/components/button";
+import { productRoute } from "@/config/routes";
 import { formatGhs } from "@/lib/currency";
 import { cn } from "@threadsofgold/ui/lib/utils";
 import type { CartLine } from "@/types/commerce";
@@ -29,7 +30,7 @@ export function CartLineItem({ line, variant = "page" }: CartLineItemProps) {
       )}
     >
       <Link
-        href={`/shop/${product.slug}`}
+        href={productRoute(product.slug)}
         className={cn(
           "relative shrink-0 overflow-hidden bg-muted outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
           isDrawer
@@ -62,7 +63,7 @@ export function CartLineItem({ line, variant = "page" }: CartLineItemProps) {
               )}
             >
               <Link
-                href={`/shop/${product.slug}`}
+                href={productRoute(product.slug)}
                 className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
               >
                 {product.name}

@@ -23,6 +23,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@threadsofgold/ui/components/empty";
+import { storefrontRoutes } from "@/config/routes";
 
 export function CartPageClient() {
   const { lines, totalQuantity, clearCart } = useCart();
@@ -34,7 +35,7 @@ export function CartPageClient() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/shop">Shop</Link>
+                <Link href={storefrontRoutes.shop}>Shop</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -60,7 +61,7 @@ export function CartPageClient() {
             </EmptyHeader>
             <EmptyContent>
               <Link
-                href="/shop"
+                href={storefrontRoutes.shop}
                 className={buttonVariants({ size: "lg", className: "h-11" })}
               >
                 Explore the collection
@@ -94,7 +95,7 @@ export function CartPageClient() {
                   <CartLineItem key={line.id} line={line} />
                 ))}
                 <Link
-                  href="/shop"
+                  href={storefrontRoutes.shop}
                   className="w-fit text-sm underline underline-offset-4 hover:text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
                 >
                   Continue shopping
@@ -104,7 +105,7 @@ export function CartPageClient() {
               <OrderSummary
                 lines={lines}
                 action={{
-                  href: "/checkout",
+                  href: storefrontRoutes.checkoutPreview,
                   label: "Continue to checkout preview",
                 }}
                 className="lg:sticky lg:top-32"
