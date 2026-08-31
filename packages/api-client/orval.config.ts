@@ -19,6 +19,14 @@ export default defineConfig({
       tsconfig: "./tsconfig.json",
       override: {
         header: false,
+        operations: {
+          createFoundationRequest: {
+            fetch: { runtimeValidation: false },
+          },
+          getFoundationRequest: {
+            fetch: { runtimeValidation: false },
+          },
+        },
         fetch: {
           includeHttpResponseReturnType: true,
           runtimeValidation: true,

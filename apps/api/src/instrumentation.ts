@@ -7,6 +7,9 @@ loadEnvironmentFile({ path: ".env", quiet: true });
 
 const environment = parseApiEnvironment({
   APP_ENV: process.env["APP_ENV"],
+  FOUNDATION_RUNTIME_ENABLED: process.env["FOUNDATION_RUNTIME_ENABLED"],
+  DATABASE_URL: process.env["DATABASE_URL"],
+  REDIS_URL: process.env["REDIS_URL"],
   HOST: process.env["HOST"],
   PORT: process.env["PORT"],
   LOG_LEVEL: process.env["LOG_LEVEL"],

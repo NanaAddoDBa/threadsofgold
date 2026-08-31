@@ -7,6 +7,14 @@ loadEnvironmentFile({ path: ".env", quiet: true });
 
 const environment = parseWorkerEnvironment({
   APP_ENV: process.env["APP_ENV"],
+  FOUNDATION_RUNTIME_ENABLED: process.env["FOUNDATION_RUNTIME_ENABLED"],
+  DATABASE_URL: process.env["DATABASE_URL"],
+  REDIS_URL: process.env["REDIS_URL"],
+  HEALTH_HOST: process.env["HEALTH_HOST"],
+  HEALTH_PORT: process.env["HEALTH_PORT"],
+  SMTP_HOST: process.env["SMTP_HOST"],
+  SMTP_PORT: process.env["SMTP_PORT"],
+  FOUNDATION_NOTIFICATION_TO: process.env["FOUNDATION_NOTIFICATION_TO"],
   LOG_LEVEL: process.env["LOG_LEVEL"],
   APP_RELEASE: process.env["APP_RELEASE"],
   OTEL_ENABLED: process.env["OTEL_ENABLED"],

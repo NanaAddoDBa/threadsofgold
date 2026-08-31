@@ -3,6 +3,8 @@ import { ConfigModule } from "@nestjs/config";
 
 import { AppController } from "./app.controller.js";
 import { validateApiEnvironment } from "./config/environment.js";
+import { FoundationController } from "./foundation/foundation.controller.js";
+import { FoundationRuntimeService } from "./foundation/foundation-runtime.service.js";
 import { HealthController } from "./operations/health.controller.js";
 import { HealthService } from "./operations/health.service.js";
 
@@ -15,7 +17,7 @@ import { HealthService } from "./operations/health.service.js";
       validate: validateApiEnvironment,
     }),
   ],
-  controllers: [AppController, HealthController],
-  providers: [HealthService],
+  controllers: [AppController, FoundationController, HealthController],
+  providers: [FoundationRuntimeService, HealthService],
 })
 export class AppModule {}

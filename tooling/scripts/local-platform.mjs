@@ -1,5 +1,6 @@
+import { randomBytes } from "node:crypto";
 import { constants as fileConstants } from "node:fs";
-import { access, copyFile } from "node:fs/promises";
+import { access, copyFile, readFile, writeFile } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -11,6 +12,9 @@ const composeEnvironmentFile = resolve(
   repositoryRoot,
   "infrastructure/local/.env.local",
 );
+const foundationVerifierTokenPlaceholder =
+  "replace-with-random-local-verifier-token";
+const storefrontEnvironmentBase = "apps/storefront/.env";
 
 const environmentFiles = [
   "infrastructure/local/.env",
@@ -21,6 +25,7 @@ const environmentFiles = [
 ].map((relativeBase) => ({
   example: resolve(repositoryRoot, `${relativeBase}.example`),
   local: resolve(repositoryRoot, `${relativeBase}.local`),
+  relativeBase,
 }));
 
 const usage = `Usage: node tooling/scripts/local-platform.mjs <command>
@@ -46,6 +51,30 @@ async function pathExists(path) {
   }
 }
 
+async function ensureFoundationVerifierToken(environmentFile) {
+  const source = await readFile(environmentFile, "utf8");
+  const tokenLine = /^FOUNDATION_VERIFIER_TOKEN=(.*)$/mu;
+  const configuredValue = tokenLine.exec(source)?.[1]?.trim();
+
+  if (
+    configuredValue !== undefined &&
+    configuredValue !== foundationVerifierTokenPlaceholder &&
+    configuredValue.length >= 32
+  ) {
+    return;
+  }
+
+  const generatedToken = randomBytes(32).toString("base64url");
+  const updatedSource = tokenLine.test(source)
+    ? source.replace(tokenLine, `FOUNDATION_VERIFIER_TOKEN=${generatedToken}`)
+    : `${source.trimEnd()}\nFOUNDATION_VERIFIER_TOKEN=${generatedToken}\n`;
+
+  await writeFile(environmentFile, updatedSource, "utf8");
+  console.log(
+    `Generated a missing local foundation verifier token in ${environmentFile}`,
+  );
+}
+
 async function setupEnvironmentFiles() {
   let created = 0;
 
@@ -54,6 +83,9 @@ async function setupEnvironmentFiles() {
 
     if (await pathExists(environmentFile.local)) {
       console.log(`Preserved existing ${environmentFile.local}`);
+      if (environmentFile.relativeBase === storefrontEnvironmentBase) {
+        await ensureFoundationVerifierToken(environmentFile.local);
+      }
       continue;
     }
 
@@ -63,6 +95,9 @@ async function setupEnvironmentFiles() {
       fileConstants.COPYFILE_EXCL,
     );
     console.log(`Created ${environmentFile.local}`);
+    if (environmentFile.relativeBase === storefrontEnvironmentBase) {
+      await ensureFoundationVerifierToken(environmentFile.local);
+    }
     created += 1;
   }
 

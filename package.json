@@ -7,6 +7,11 @@
   "engines": {
     "node": ">=22.23.2 <23"
   },
+  "pnpm": {
+    "overrides": {
+      "@prisma/config@7.10.0>deepmerge-ts": "8.0.2"
+    }
+  },
   "scripts": {
     "dev": "turbo run dev --filter=@threadsofgold/storefront",
     "dev:storefront": "turbo run dev --filter=@threadsofgold/storefront",
@@ -18,13 +23,14 @@
     "typecheck": "pnpm database:generate && turbo run typecheck",
     "test": "pnpm test:unit && pnpm test:contract",
     "test:unit": "vitest run --project unit --coverage",
-    "test:integration": "vitest run --project integration",
+    "test:integration": "pnpm database:generate && vitest run --project integration",
     "test:contract": "vitest run --project contract",
     "test:e2e": "playwright test --project chromium-desktop --project chromium-mobile",
     "test:accessibility": "playwright test tests/accessibility",
     "test:performance": "k6 run tests/performance/storefront-smoke.js",
     "database:generate": "pnpm --filter @threadsofgold/database generate",
-    "contracts:generate": "pnpm --filter @threadsofgold/api openapi:generate && pnpm --filter @threadsofgold/api-client generate",
+    "database:migrate:deploy": "pnpm --filter @threadsofgold/database migrate:deploy",
+    "contracts:generate": "pnpm --filter @threadsofgold/api openapi:generate && prettier --write packages/contracts/openapi/v1.json && pnpm --filter @threadsofgold/api-client generate",
     "contracts:check": "node scripts/check-generated.mjs && redocly lint packages/contracts/openapi/v1.json",
     "licenses:check": "node scripts/check-licenses.mjs",
     "renovate:validate": "renovate-config-validator --strict renovate.json5",
@@ -34,6 +40,7 @@
     "local:status": "node tooling/scripts/local-platform.mjs status",
     "local:down": "node tooling/scripts/local-platform.mjs down",
     "local:reset": "node tooling/scripts/local-platform.mjs reset --confirm-reset",
+    "foundation:verify": "node scripts/verify-walking-skeleton.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "pnpm contracts:check && pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build"

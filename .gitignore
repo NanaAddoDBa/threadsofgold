@@ -5,6 +5,7 @@ node_modules/
 
 # testing
 coverage/
+.playwright-cli/
 playwright-report/
 test-results/
 
@@ -15,6 +16,7 @@ out/
 # production
 build/
 dist/
+packages/database/src/generated/prisma/
 
 # task cache
 .turbo/

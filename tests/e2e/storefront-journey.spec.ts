@@ -11,6 +11,7 @@ test("discovers a piece and retains selected preview options in the cart", async
       name: "Express your unique style.",
     }),
   ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Sign in" })).toBeVisible();
 
   await page
     .getByRole("link", { name: "Explore the collection" })
@@ -32,8 +33,8 @@ test("discovers a piece and retains selected preview options in the cart", async
     page.getByRole("heading", { level: 1, name: "Independence Mesh Tee" }),
   ).toBeVisible();
 
-  await page.getByRole("button", { name: "Size M" }).click();
-  await page.getByRole("button", { name: "Colour Golden hour" }).click();
+  await page.getByRole("radio", { name: "Size M" }).click();
+  await page.getByRole("radio", { name: "Colour Golden hour" }).click();
   await page
     .getByRole("button", {
       name: "Add Independence Mesh Tee with selected options to the preview cart",

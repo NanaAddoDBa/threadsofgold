@@ -9,6 +9,7 @@ process.env["APP_RELEASE"] ??= "contract-generation";
 process.env["LOG_LEVEL"] ??= "silent";
 process.env["OTEL_ENABLED"] ??= "false";
 process.env["SENTRY_ENABLED"] ??= "false";
+process.env["FOUNDATION_RUNTIME_ENABLED"] = "false";
 
 function sortObject(value: unknown): unknown {
   if (Array.isArray(value)) {

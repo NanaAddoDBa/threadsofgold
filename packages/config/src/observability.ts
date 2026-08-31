@@ -2,15 +2,12 @@ import { z } from "zod";
 
 import {
   applicationEnvironmentSchema,
+  booleanEnvironmentSchema,
   isDeployedEnvironment,
   releaseIdentifierSchema,
   type ApplicationEnvironment,
 } from "./common.js";
 import { parseEnvironment } from "./parse-environment.js";
-
-const booleanEnvironmentSchema = z
-  .union([z.boolean(), z.enum(["true", "false"])])
-  .transform((value) => value === true || value === "true");
 
 const optionalHttpUrlSchema = z.preprocess(
   (value) =>

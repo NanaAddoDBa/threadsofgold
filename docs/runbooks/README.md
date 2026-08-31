@@ -36,3 +36,8 @@ Permitted document statuses are `Draft`, `In review`, `Approved`, `Deprecated`,
 and `Superseded`. `Approved` applies only to the recorded revision, environment,
 scope, approvers, and validity period. It does not authorize every execution;
 the runbook must state whether per-execution authorization is required.
+
+## Development runbooks
+
+- [Local dependencies](./local-development.md)
+- [Local walking skeleton](./walking-skeleton.md)

@@ -8,6 +8,9 @@ export function validateApiEnvironment(
 ): ApiEnvironment {
   return parseApiEnvironment({
     APP_ENV: environment["APP_ENV"],
+    FOUNDATION_RUNTIME_ENABLED: environment["FOUNDATION_RUNTIME_ENABLED"],
+    DATABASE_URL: environment["DATABASE_URL"],
+    REDIS_URL: environment["REDIS_URL"],
     HOST: environment["HOST"],
     PORT: environment["PORT"],
     LOG_LEVEL: environment["LOG_LEVEL"],

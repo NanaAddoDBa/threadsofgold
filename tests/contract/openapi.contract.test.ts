@@ -138,4 +138,56 @@ describe("generated OpenAPI contract", () => {
       ).toBe(operationId);
     }
   });
+
+  it("publishes the local idempotent request contract", async () => {
+    const document = await readGeneratedContract();
+    const paths = requireRecord(document["paths"], "paths");
+    const collection = requireRecord(
+      paths["/v1/foundation/requests"],
+      "paths./v1/foundation/requests",
+    );
+    const create = requireRecord(
+      collection["post"],
+      "paths./v1/foundation/requests.post",
+    );
+    const item = requireRecord(
+      paths["/v1/foundation/requests/{id}"],
+      "paths./v1/foundation/requests/{id}",
+    );
+    const read = requireRecord(
+      item["get"],
+      "paths./v1/foundation/requests/{id}.get",
+    );
+
+    expect(create["operationId"]).toBe("createFoundationRequest");
+    expect(read["operationId"]).toBe("getFoundationRequest");
+    expect(JSON.stringify(create)).toContain(
+      "#/components/schemas/FoundationRequest",
+    );
+    expect(JSON.stringify(create)).toContain("Idempotency-Key");
+    expect(JSON.stringify(create)).toContain("^[A-Za-z0-9._-]+$");
+    expect(JSON.stringify(read)).toContain(
+      "#/components/schemas/FoundationRequest",
+    );
+
+    const components = requireRecord(document["components"], "components");
+    const schemas = requireRecord(components["schemas"], "components.schemas");
+    const foundationRequest = requireRecord(
+      schemas["FoundationRequest"],
+      "components.schemas.FoundationRequest",
+    );
+
+    expect(foundationRequest["required"]).toEqual(
+      expect.arrayContaining([
+        "attempts",
+        "completedAt",
+        "correlationId",
+        "createdAt",
+        "id",
+        "lastErrorType",
+        "status",
+        "updatedAt",
+      ]),
+    );
+  });
 });

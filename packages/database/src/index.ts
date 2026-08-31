@@ -12,3 +12,11 @@ export interface DatabaseLifecycle {
 export interface DatabaseTransactionContext {
   readonly transactionId: string;
 }
+
+export { createDatabaseClient, type DatabaseClient } from "./client.js";
+export {
+  FoundationRequestRepository,
+  type CreateFoundationRequestInput,
+  type FoundationRequestRecord,
+  type FoundationRequestStatus,
+} from "./foundation-request-repository.js";

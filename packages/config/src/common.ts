@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+export const booleanEnvironmentSchema = z
+  .union([z.boolean(), z.enum(["true", "false"])])
+  .transform((value) => value === true || value === "true");
+
 export const applicationEnvironmentSchema = z.enum([
   "local",
   "test",
@@ -40,6 +44,24 @@ export const webOriginSchema = z
   })
   .transform((value) => new URL(value).origin);
 
+export const optionalPostgreSqlUrlSchema = z.preprocess(
+  (value) =>
+    typeof value === "string" && value.trim().length === 0 ? undefined : value,
+  z.url({ protocol: /^postgres(?:ql)?$/ }).optional(),
+);
+
+export const optionalRedisUrlSchema = z.preprocess(
+  (value) =>
+    typeof value === "string" && value.trim().length === 0 ? undefined : value,
+  z.url({ protocol: /^rediss?$/ }).optional(),
+);
+
+export const optionalWebOriginSchema = z.preprocess(
+  (value) =>
+    typeof value === "string" && value.trim().length === 0 ? undefined : value,
+  webOriginSchema.optional(),
+);
+
 export const hostSchema = z
   .string()
   .trim()
@@ -70,6 +92,17 @@ export function isDeployedEnvironment(
     environment === "development" ||
     environment === "staging" ||
     environment === "production"
+  );
+}
+
+export function isLoopbackHost(host: string): boolean {
+  const normalizedHost = host.trim().toLowerCase();
+
+  return (
+    normalizedHost === "localhost" ||
+    normalizedHost === "::1" ||
+    normalizedHost === "[::1]" ||
+    /^127(?:\.\d{1,3}){3}$/.test(normalizedHost)
   );
 }
 

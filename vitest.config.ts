@@ -3,8 +3,32 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
 const sourceAliases = {
+  "@threadsofgold/api-client/models": fileURLToPath(
+    new URL(
+      "./packages/api-client/src/generated/models/index.ts",
+      import.meta.url,
+    ),
+  ),
+  "@threadsofgold/api-client": fileURLToPath(
+    new URL("./packages/api-client/src/index.ts", import.meta.url),
+  ),
+  "@threadsofgold/config/api": fileURLToPath(
+    new URL("./packages/config/src/api.ts", import.meta.url),
+  ),
+  "@threadsofgold/config/storefront": fileURLToPath(
+    new URL("./packages/config/src/storefront.ts", import.meta.url),
+  ),
+  "@threadsofgold/config/worker": fileURLToPath(
+    new URL("./packages/config/src/worker.ts", import.meta.url),
+  ),
+  "@threadsofgold/contracts/foundation-request": fileURLToPath(
+    new URL("./packages/contracts/src/foundation-request.ts", import.meta.url),
+  ),
   "@threadsofgold/contracts/service": fileURLToPath(
     new URL("./packages/contracts/src/service.ts", import.meta.url),
+  ),
+  "@threadsofgold/database": fileURLToPath(
+    new URL("./packages/database/src/index.ts", import.meta.url),
   ),
   "@threadsofgold/test-utils/containers/postgresql": fileURLToPath(
     new URL(

@@ -5,6 +5,7 @@
     "dev": {
       "env": [
         "APP_ENV",
+        "FOUNDATION_RUNTIME_ENABLED",
         "HOST",
         "PORT",
         "LOG_LEVEL",
@@ -13,7 +14,12 @@
         "OTEL_TRACES_SAMPLER_ARG",
         "SENTRY_ENABLED"
       ],
-      "passThroughEnv": ["OTEL_EXPORTER_OTLP_TRACES_ENDPOINT", "SENTRY_DSN"]
+      "passThroughEnv": [
+        "DATABASE_URL",
+        "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT",
+        "REDIS_URL",
+        "SENTRY_DSN"
+      ]
     }
   }
 }

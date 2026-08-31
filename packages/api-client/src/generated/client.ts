@@ -4,7 +4,11 @@ import {
   GetApiVersion200,
   ServiceFoundation,
 } from "@threadsofgold/api-client/models";
-import type { GetApiReadiness503 } from "@threadsofgold/api-client/models";
+import type {
+  FoundationRequest,
+  GetApiReadiness503,
+  HttpErrorResponse,
+} from "@threadsofgold/api-client/models";
 
 export type getApiLivenessResponse200 = {
   data: GetApiLiveness200;
@@ -147,6 +151,121 @@ export const getServiceFoundation = async (
     status: res.status,
     headers: res.headers,
   } as getServiceFoundationResponse;
+};
+
+export type createFoundationRequestResponse202 = {
+  data: FoundationRequest;
+  status: 202;
+};
+
+export type createFoundationRequestResponse400 = {
+  data: HttpErrorResponse;
+  status: 400;
+};
+
+export type createFoundationRequestResponse404 = {
+  data: HttpErrorResponse;
+  status: 404;
+};
+
+export type createFoundationRequestResponseSuccess =
+  createFoundationRequestResponse202 & {
+    headers: Headers;
+  };
+export type createFoundationRequestResponseError = (
+  createFoundationRequestResponse400 | createFoundationRequestResponse404
+) & {
+  headers: Headers;
+};
+
+export type createFoundationRequestResponse =
+  createFoundationRequestResponseSuccess | createFoundationRequestResponseError;
+
+export const getCreateFoundationRequestUrl = () => {
+  return `/v1/foundation/requests`;
+};
+
+/**
+ * Available only in local and test environments. It carries no customer, order, or payment data.
+ * @summary Create an idempotent synthetic walking-skeleton request
+ */
+export const createFoundationRequest = async (
+  options?: RequestInit,
+  fetchFn?: typeof globalThis.fetch,
+): Promise<createFoundationRequestResponse> => {
+  const res = await (fetchFn ?? fetch)(getCreateFoundationRequestUrl(), {
+    ...options,
+    method: "POST",
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: createFoundationRequestResponse["data"] = body
+    ? JSON.parse(body)
+    : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as createFoundationRequestResponse;
+};
+
+export type getFoundationRequestResponse200 = {
+  data: FoundationRequest;
+  status: 200;
+};
+
+export type getFoundationRequestResponse400 = {
+  data: HttpErrorResponse;
+  status: 400;
+};
+
+export type getFoundationRequestResponse404 = {
+  data: HttpErrorResponse;
+  status: 404;
+};
+
+export type getFoundationRequestResponseSuccess =
+  getFoundationRequestResponse200 & {
+    headers: Headers;
+  };
+export type getFoundationRequestResponseError = (
+  getFoundationRequestResponse400 | getFoundationRequestResponse404
+) & {
+  headers: Headers;
+};
+
+export type getFoundationRequestResponse =
+  getFoundationRequestResponseSuccess | getFoundationRequestResponseError;
+
+export const getGetFoundationRequestUrl = (id: string) => {
+  return `/v1/foundation/requests/${id}`;
+};
+
+/**
+ * Available only in local and test environments. It carries no customer, order, or payment data.
+ * @summary Read a synthetic walking-skeleton request
+ */
+export const getFoundationRequest = async (
+  id: string,
+  options?: RequestInit,
+  fetchFn?: typeof globalThis.fetch,
+): Promise<getFoundationRequestResponse> => {
+  const res = await (fetchFn ?? fetch)(getGetFoundationRequestUrl(id), {
+    ...options,
+    method: "GET",
+  });
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: getFoundationRequestResponse["data"] = body
+    ? JSON.parse(body)
+    : {};
+  return {
+    data,
+    status: res.status,
+    headers: res.headers,
+  } as getFoundationRequestResponse;
 };
 
 export type getApiVersionResponse200 = {

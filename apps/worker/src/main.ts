@@ -84,7 +84,9 @@ async function bootstrap(): Promise<void> {
     workerObservability.logger.info("Worker foundation ready", {
       app_environment: environment,
       event: "worker_ready",
-      queue_connected: false,
+      queue_connected: configuration.get("FOUNDATION_RUNTIME_ENABLED", {
+        infer: true,
+      }),
     });
   } catch (error) {
     if (operationsServer !== undefined) {

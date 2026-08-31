@@ -9,12 +9,25 @@
     "CC0-1.0",
     "ISC",
     "MIT",
+    "MIT-0",
+    "MIT and ISC",
     "MPL-2.0",
     "Python-2.0",
-    "Unlicense"
+    "Unlicense",
+    "(BSD-2-Clause OR MIT OR Apache-2.0)",
+    "(MIT OR WTFPL)"
   ],
   "deniedLicenseFragments": ["AGPL-", "GPL-", "LGPL-", "SSPL-"],
   "exceptions": [
+    {
+      "license": "EPL-2.0",
+      "packagePatterns": ["elkjs"],
+      "owner": "Threads of Gold engineering",
+      "approval": "temporary-engineering-review",
+      "reason": "Prisma Studio introduces elkjs through the Prisma CLI peer graph; the CLI and Studio are not included in the API or worker runtime images, but accountable legal review is still required before production launch.",
+      "compensatingControl": "Keep Prisma CLI tooling outside runtime images, retain notices, and re-run the production license inventory and container contents checks before release.",
+      "expires": "2026-09-30"
+    },
     {
       "license": "Apache-2.0 AND LGPL-3.0-or-later",
       "packagePatterns": ["@img/sharp-*"],
