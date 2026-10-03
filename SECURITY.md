@@ -23,6 +23,13 @@ coordinate a correction, and communicate a disclosure decision. Response times
 remain best-effort until the production support and incident objectives are
 approved.
 
+## Dependency license review
+
+Production dependency licenses are checked with `pnpm licenses:check`. See the
+[license policy and exception review procedure](security/LICENSE_POLICY.md) for
+package scope, expiry handling, and the distinction between engineering
+exceptions and production approval.
+
 ## Scope boundaries
 
 The current account, checkout, order, and payment behavior is prototype or

@@ -9,7 +9,9 @@
   },
   "pnpm": {
     "overrides": {
-      "@prisma/config@7.10.0>deepmerge-ts": "8.0.2"
+      "@prisma/config@7.10.0>deepmerge-ts": "8.0.2",
+      "prisma@7.10.0>mysql2": "3.23.1",
+      "orval@8.27.0>js-yaml": "4.3.2"
     }
   },
   "scripts": {
