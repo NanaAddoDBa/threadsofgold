@@ -19,10 +19,14 @@ RUN corepack enable \
 
 FROM build-base AS dependencies
 
+COPY pnpm-lock.yaml pnpm-workspace.yaml ./
+
+# Keep downloaded packages in a layer that survives source-only changes.
+RUN pnpm fetch --frozen-lockfile
+
 COPY . .
 
-RUN --mount=type=cache,id=threadsofgold-pnpm,target=/pnpm/store \
-  pnpm install --frozen-lockfile
+RUN pnpm install --offline --frozen-lockfile
 
 RUN DATABASE_URL=postgresql://build:build@127.0.0.1:5432/build pnpm database:generate
 
@@ -54,13 +58,11 @@ RUN pnpm exec turbo run build --filter=@threadsofgold/worker...
 
 FROM build-api AS deploy-api
 
-RUN --mount=type=cache,id=threadsofgold-pnpm,target=/pnpm/store \
-  pnpm --filter @threadsofgold/api deploy --prod --legacy /deploy/api
+RUN pnpm --filter @threadsofgold/api deploy --prod --legacy /deploy/api
 
 FROM build-worker AS deploy-worker
 
-RUN --mount=type=cache,id=threadsofgold-pnpm,target=/pnpm/store \
-  pnpm --filter @threadsofgold/worker deploy --prod --legacy /deploy/worker
+RUN pnpm --filter @threadsofgold/worker deploy --prod --legacy /deploy/worker
 
 FROM operating-system AS runtime-base
 
